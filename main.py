@@ -69,5 +69,5 @@ for i in range(len(grades)):
     # Calculate percentage out of 100 and always round up
     percentage = math.ceil((grades[key_at_position] / 5 / int(days)) * 100)
 
-    print(key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/ 100")
+    print(key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100")
 

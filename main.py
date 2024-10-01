@@ -5,7 +5,8 @@ import os
 import time
 import math
 lines=[]
-grades={}
+grades=[{},{},{},{},{},{}]
+
 x=-1
 
 BLACK  = "\033[30m"
@@ -17,6 +18,20 @@ PURPLE = "\033[35m"
 CYAN   = "\033[36m"
 WHITE  = "\033[37m"
 RESET  = "\033[0m"
+
+def color_to_number(color):
+    if color == "Rosso":
+        return 0
+    elif color == "Arancione":
+        return 1
+    elif color == "Giallo":
+        return 2
+    elif color == "Verde":
+        return 3
+    elif color == "Blu":
+        return 4
+    elif color == "Viola":
+        return 5
 
 def new_email(email):
     email = re.sub('[!@#$.]', '', email)
@@ -32,12 +47,9 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         user = new_email(current_line[1])
         if not user or len(user) == 0:
             continue  # Skip processing if the email is invalid or empty
-
-        #print(row)
-        #print(user)
+        color=row[2]
+        class_number=int(color_to_number(color))
         i=0
-        if row[2] != '':
-            i=i+1
         if row[3] != '':
             i=i+1
         if row[4] != '':
@@ -46,10 +58,12 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
             i=i+1
         if row[6] != '':
             i=i+1
-        if user in grades: # If user is already in the dict
-            grades[user] = grades[user]+i
+        if row[7] != '':
+            i=i+1
+        if user in grades[class_number]: # If user is already in the dict
+            grades[class_number][user] = grades[class_number][user]+i
         else: # If user is new
-            grades[user] = i
+            grades[class_number][user] = i
 
 while True:
     os.system('clear')

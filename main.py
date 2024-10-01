@@ -6,6 +6,7 @@ import time
 import math
 lines=[]
 grades=[{},{},{},{},{},{}]
+colors=["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 
 x=-1
 
@@ -75,13 +76,16 @@ while True:
     print(RED+"Enter a number.")
     time.sleep(3)
 
-i=1
-print(GREEN)
-for i in range(len(grades)):
-    key_at_position = list(grades.keys())[i]
+# Display grades
+while True:
+    os.system('clear')  # Clear the terminal
+    print(GREEN)
+    for y in range(len(grades)):
+        current_color = colors[y]  # This is just for display
+        print(PURPLE + current_color + ":\n"+GREEN)
+        for i, key_at_position in enumerate(grades[y].keys()):  # Use 'y' to access grades, not 'current_color'
+            percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
+            print(key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100\n")
     
-    # Calculate percentage out of 100 and always round up
-    percentage = math.ceil((grades[key_at_position] / 5 / int(days)) * 100)
-
-    print(key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100")
+    break  # Exit the loop after printing once
 

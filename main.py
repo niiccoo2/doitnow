@@ -10,7 +10,7 @@ import math
 # use days
 
 lines=[]
-grades={{},{},{},{},{},{}}
+grades={"Rosso": {}, "Arancione": {}, "Giallo": {}, "Verde": {}, "Blu": {}, "Viola": {}}
 colors=["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 most_recent_user_date = {}
 

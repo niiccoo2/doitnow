@@ -1,12 +1,18 @@
-# https://developers.google.com/forms/api/reference/rest/v1/forms.responses
 import csv
 import re
 import os
 import time
 import math
+
+# Thing to do:
+# Test with commas
+# dont convrt class to number.
+# use days
+
 lines=[]
-grades=[{},{},{},{},{},{}]
+grades={{},{},{},{},{},{}}
 colors=["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
+most_recent_user_date = {}
 
 x=-1
 
@@ -20,32 +26,34 @@ CYAN   = "\033[36m"
 WHITE  = "\033[37m"
 RESET  = "\033[0m"
 
-def color_to_number(color):
-    if color == "Rosso":
-        return 0
-    elif color == "Arancione":
-        return 1
-    elif color == "Giallo":
-        return 2
-    elif color == "Verde":
-        return 3
-    elif color == "Blu":
-        return 4
-    elif color == "Viola":
-        return 5
+# def color_to_number(color):
+#     if color == "Rosso":
+#         return 0
+#     elif color == "Arancione":
+#         return 1
+#     elif color == "Giallo":
+#         return 2
+#     elif color == "Verde":
+#         return 3
+#     elif color == "Blu":
+#         return 4
+#     elif color == "Viola":
+#         return 5
 
 def new_email(email):
-    email = re.sub('[!@#$.]', '', email)
-    email = ''.join(email.split())
-    email = email[:-16]
+    email = re.sub('@watertown.k12.ma.us', '', email)
     return email
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
-    read = csv.reader(csvfile, delimiter=',', quotechar='|')
+    read = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(read)
     for row in read:
         x=x+1
         lines.append(row)
         current_line=lines[x]
         user = new_email(current_line[1])
+        if user not in most_recent_user_date:
+            most_recent_user_date[user]=None
+        current_date=current_line[0][:-8]
         if not user or len(user) == 0:
             continue  # Skip processing if the email is invalid or empty
         color=row[2]
@@ -61,10 +69,14 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
             i=i+1
         if row[7] != '':
             i=i+1
-        if user in grades[class_number]: # If user is already in the dict
-            grades[class_number][user] = grades[class_number][user]+i
+        if most_recent_user_date[user] == current_date:
+            continue
+        if user in grades[color]: # If user is already in the dict
+            grades[color][user] = grades[color][user]+i
         else: # If user is new
-            grades[class_number][user] = i
+            grades[color][user] = i
+        most_recent_user_date[user] = current_date
+
 
 while True:
     os.system('clear')

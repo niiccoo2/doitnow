@@ -5,12 +5,12 @@ import time
 import math
 
 # Thing to do:
-# Test with commas
-# dont convrt class to number.
-# use days
+# Add better names
+# only 3 questions for 6th grade Giallo/Viola
 
 lines=[]
-grades={"Rosso": {}, "Arancione": {}, "Giallo": {}, "Verde": {}, "Blu": {}, "Viola": {}}
+#grades={"Rosso": {}, "Arancione": {}, "Giallo": {}, "Verde": {}, "Blu": {}, "Viola": {}} # Tried 
+grades=[{},{},{},{},{},{}]
 colors=["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 most_recent_user_date = {}
 
@@ -26,19 +26,19 @@ CYAN   = "\033[36m"
 WHITE  = "\033[37m"
 RESET  = "\033[0m"
 
-# def color_to_number(color):
-#     if color == "Rosso":
-#         return 0
-#     elif color == "Arancione":
-#         return 1
-#     elif color == "Giallo":
-#         return 2
-#     elif color == "Verde":
-#         return 3
-#     elif color == "Blu":
-#         return 4
-#     elif color == "Viola":
-#         return 5
+def color_to_number(color):
+    if color == "Rosso":
+        return 0
+    elif color == "Arancione":
+        return 1
+    elif color == "Giallo":
+        return 2
+    elif color == "Verde":
+        return 3
+    elif color == "Blu":
+        return 4
+    elif color == "Viola":
+        return 5
 
 def new_email(email):
     email = re.sub('@watertown.k12.ma.us', '', email)
@@ -71,10 +71,43 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
             i=i+1
         if most_recent_user_date[user] == current_date:
             continue
-        if user in grades[color]: # If user is already in the dict
-            grades[color][user] = grades[color][user]+i
+        if user in grades[color_to_number(color)]: # If user is already in the dict
+            grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
         else: # If user is new
-            grades[color][user] = i
+            grades[color_to_number(color)][user] = i
+        most_recent_user_date[user] = current_date
+with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
+    read = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(read)
+    for row in read:
+        x=x+1
+        lines.append(row)
+        current_line=lines[x]
+        user = new_email(current_line[1])
+        if user not in most_recent_user_date:
+            most_recent_user_date[user]=None
+        current_date=current_line[0][:-8]
+        if not user or len(user) == 0:
+            continue  # Skip processing if the email is invalid or empty
+        color=row[2]
+        class_number=int(color_to_number(color))
+        i=0
+        if row[3] != '':
+            i=i+1
+        if row[4] != '':
+            i=i+1
+        if row[5] != '':
+            i=i+1
+        if row[6] != '':
+            i=i+1
+        if row[7] != '':
+            i=i+1
+        if most_recent_user_date[user] == current_date:
+            continue
+        if user in grades[color_to_number(color)]: # If user is already in the dict
+            grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
+        else: # If user is new
+            grades[color_to_number(color)][user] = i
         most_recent_user_date[user] = current_date
 
 

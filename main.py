@@ -4,17 +4,20 @@ import os
 import time
 import math
 
-# Thing to do:
-# Add better names
-# only 3 questions for 6th grade Giallo/Viola
+"""
+Thing to do:
+Add better names
+only 3 questions for 6th grade Giallo/Viola
+"""
 
 lines=[]
 #grades={"Rosso": {}, "Arancione": {}, "Giallo": {}, "Verde": {}, "Blu": {}, "Viola": {}} # Tried 
-grades=[{},{},{},{},{},{}]
-colors=["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
+grades = [{},{},{},{},{},{}]
+colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
+names = {}
 most_recent_user_date = {}
 
-x=-1
+x =- 1
 
 BLACK  = "\033[30m"
 RED    = "\033[31m"
@@ -76,6 +79,8 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         else: # If user is new
             grades[color_to_number(color)][user] = i
         most_recent_user_date[user] = current_date
+        if user in names:
+            names[user] = current_line[9]
 # with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
 #     read = csv.reader(csvfile, delimiter=',', quotechar='"')
 #     next(read)

@@ -76,39 +76,39 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         else: # If user is new
             grades[color_to_number(color)][user] = i
         most_recent_user_date[user] = current_date
-with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
-    read = csv.reader(csvfile, delimiter=',', quotechar='"')
-    next(read)
-    for row in read:
-        x=x+1
-        lines.append(row)
-        current_line=lines[x]
-        user = new_email(current_line[1])
-        if user not in most_recent_user_date:
-            most_recent_user_date[user]=None
-        current_date=current_line[0][:-8]
-        if not user or len(user) == 0:
-            continue  # Skip processing if the email is invalid or empty
-        color=row[2]
-        class_number=int(color_to_number(color))
-        i=0
-        if row[3] != '':
-            i=i+1
-        if row[4] != '':
-            i=i+1
-        if row[5] != '':
-            i=i+1
-        if row[6] != '':
-            i=i+1
-        if row[7] != '':
-            i=i+1
-        if most_recent_user_date[user] == current_date:
-            continue
-        if user in grades[color_to_number(color)]: # If user is already in the dict
-            grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
-        else: # If user is new
-            grades[color_to_number(color)][user] = i
-        most_recent_user_date[user] = current_date
+# with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
+#     read = csv.reader(csvfile, delimiter=',', quotechar='"')
+#     next(read)
+#     for row in read:
+#         x=x+1
+#         lines.append(row)
+#         current_line=lines[x]
+#         user = new_email(current_line[1])
+#         if user not in most_recent_user_date:
+#             most_recent_user_date[user]=None
+#         current_date=current_line[0][:-8]
+#         if not user or len(user) == 0:
+#             continue  # Skip processing if the email is invalid or empty
+#         color=row[2]
+#         class_number=int(color_to_number(color))
+#         i=0
+#         if row[3] != '':
+#             i=i+1
+#         if row[4] != '':
+#             i=i+1
+#         if row[5] != '':
+#             i=i+1
+#         if row[6] != '':
+#             i=i+1
+#         if row[7] != '':
+#             i=i+1
+#         if most_recent_user_date[user] == current_date:
+#             continue
+#         if user in grades[color_to_number(color)]: # If user is already in the dict
+#             grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
+#         else: # If user is new
+#             grades[color_to_number(color)][user] = i
+#         most_recent_user_date[user] = current_date
 
 
 while True:

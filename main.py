@@ -79,8 +79,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         else: # If user is new
             grades[color_to_number(color)][user] = i
         most_recent_user_date[user] = current_date
-        if user in names:
-            names[user] = current_line[9]
+        names[user] = current_line[8]
 # with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
 #     read = csv.reader(csvfile, delimiter=',', quotechar='"')
 #     next(read)
@@ -135,7 +134,7 @@ while True:
         print(PURPLE + current_color + ":\n"+GREEN)
         for i, key_at_position in enumerate(grades[y].keys()):  # Use 'y' to access grades, not 'current_color'
             percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
-            print(key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100\n")
+            print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100\n")
     
     break  # Exit the loop after printing once
 

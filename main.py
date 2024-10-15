@@ -6,46 +6,47 @@ import math
 import datetime
 
 """
-Thing to do:
-Add better names
-only 3 questions for 6th grade Giallo/Viola
-
-Draw a calender, ask what days you were out
-Redo points.
-day*questions=total points
-
-
-points/max_points (days*5)
-date(daysinmonth)
-when reading .csv dont grade any that are on days teacher was not there
+TODO:
+- Add better variable and function names.
+- Limit questions for 6th grade Giallo/Viola.
+- Implement a calendar feature to track attendance.
+- Update the points system: total points = days * questions.
+- Calculate final score: points/max_points (days * 5).
+- Only grade entries for days the teacher was present.
 """
 
-lines=[]
-#grades={"Rosso": {}, "Arancione": {}, "Giallo": {}, "Verde": {}, "Blu": {}, "Viola": {}} # Tried 
-grades = [{},{},{},{},{},{}]
+# List to store lines from the CSV file
+lines = []
+
+# Initialize grades dictionary for each color group
+grades = [{}, {}, {}, {}, {}, {}]
 colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
-names = {}
-most_recent_user_date = {}
+names = {}  # To store names associated with users
+most_recent_user_date = {}  # To track the last date each user submitted
 
-x =- 1
+# Variable to track the index of lines
+x = -1
 
-BLACK  = "\033[30m"
-RED    = "\033[31m"
-GREEN  = "\033[32m"
+# ANSI color codes for terminal output
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
 YELLOW = "\033[33m"
-BLUE   = "\033[34m"
+BLUE = "\033[34m"
 PURPLE = "\033[35m"
-CYAN   = "\033[36m"
-WHITE  = "\033[37m"
-RESET  = "\033[0m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+RESET = "\033[0m"
 
 def clear_console():
-    if os.name=='nt':
-        os.system('cls')
+    """Clear the terminal screen based on the OS."""
+    if os.name == 'nt':
+        os.system('cls')  # Windows
     else:
-        os.system('clear')  # Clear the terminal
+        os.system('clear')  # Unix/Linux
 
 def color_to_number(color):
+    """Convert color name to an index number for grades."""
     if color == "Rosso":
         return 0
     elif color == "Arancione":
@@ -60,86 +61,65 @@ def color_to_number(color):
         return 5
 
 def new_email(email):
+    """Clean up the email address by removing the domain."""
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
     
+# Read the CSV file with form responses
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
-    next(read)
+    next(read)  # Skip header row
     for row in read:
-        x=x+1
-        lines.append(row)
-        current_line=lines[x]
-        user = new_email(current_line[1])
+        x += 1  # Increment line index
+        lines.append(row)  # Append the row to lines
+        current_line = lines[x]
+        user = new_email(current_line[1])  # Extract and clean email
         if user not in most_recent_user_date:
-            most_recent_user_date[user]=None
-        current_date=current_line[0][:-8]
+            most_recent_user_date[user] = None  # Initialize date tracking
+        
+        current_date = current_line[0][:-8]  # Extract date from current line
+        
         if not user or len(user) == 0:
-            continue  # Skip processing if the email is invalid or empty
-        color=row[2]
-        class_number=int(color_to_number(color))
-        i=0
-        if row[3] != '':
-            i=i+1
-        if row[4] != '':
-            i=i+1
-        if row[5] != '':
-            i=i+1
-        if row[6] != '':
-            i=i+1
-        if row[7] != '':
-            i=i+1
+            continue  # Skip invalid or empty emails
+        
+        color = row[2]  # Extract the color associated with the user
+        class_number = int(color_to_number(color))  # Convert color to index
+        
+        # Count non-empty responses for the user
+        i = 0
+        for j in range(3, 8):  # Columns 3 to 7 are question responses
+            if row[j] != '':
+                i += 1
+        
+        # Convert date string to datetime object
         datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
-        week_number = datetime_obj.weekday() #monday=0
+        week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+        
+        # Skip weekends (Saturday=5, Sunday=6)
         if week_number == 5 or week_number == 6:
             continue
+        
+        # Skip if user has already submitted for this date
         if most_recent_user_date[user] == current_date:
             continue
-        if user in grades[color_to_number(color)]: # If user is already in the dict
-            grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
-        else: # If user is new
-            grades[color_to_number(color)][user] = i
+        
+        # Update grades for the user
+        if user in grades[color_to_number(color)]:  # If user already exists
+            grades[color_to_number(color)][user] += i  # Increment points
+        else:  # New user
+            grades[color_to_number(color)][user] = i  # Set points
+        
+        # Update the most recent date for this user
         most_recent_user_date[user] = current_date
-        names[user] = current_line[8]
-# with open('Fai Adesso - Form Responses 6th.csv', newline='') as csvfile:
-#     read = csv.reader(csvfile, delimiter=',', quotechar='"')
-#     next(read)
-#     for row in read:
-#         x=x+1
-#         lines.append(row)
-#         current_line=lines[x]
-#         user = new_email(current_line[1])
-#         if user not in most_recent_user_date:
-#             most_recent_user_date[user]=None
-#         current_date=current_line[0][:-8]
-#         if not user or len(user) == 0:
-#             continue  # Skip processing if the email is invalid or empty
-#         color=row[2]
-#         class_number=int(color_to_number(color))
-#         i=0
-#         if row[3] != '':
-#             i=i+1
-#         if row[4] != '':
-#             i=i+1
-#         if row[5] != '':
-#             i=i+1
-#         if row[6] != '':
-#             i=i+1
-#         if row[7] != '':
-#             i=i+1
-#         if most_recent_user_date[user] == current_date:
-#             continue
-#         if user in grades[color_to_number(color)]: # If user is already in the dict
-#             grades[color_to_number(color)][user] = grades[color_to_number(color)][user]+i
-#         else: # If user is new
-#             grades[color_to_number(color)][user] = i
-#         most_recent_user_date[user] = current_date
+        names[user] = current_line[8]  # Store the user's name
 
+# The following section is commented out but appears to be duplicate code
+# for processing a different CSV file.
 
 while True:
     clear_console()
     days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE)
-
+    
     if days.isnumeric():
         break
     clear_console()
@@ -147,16 +127,15 @@ while True:
     time.sleep(3)
 
 # Display grades
-
 clear_console()
 print(GREEN)
 for y in range(len(grades)):
-    current_color = colors[y]  # This is just for display
-    print(PURPLE + current_color + ":\n"+GREEN)
-    for i, key_at_position in enumerate(grades[y].keys()):  # Use 'y' to access grades, not 'current_color'
+    current_color = colors[y]  # For display purposes
+    print(PURPLE + current_color + ":\n" + GREEN)
+    for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
+        # Calculate percentage score
         percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
-        percentage = (int(grades[y][key_at_position])/(int(days)*5))*100
-        print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " + GREEN + str(grades[y][key_at_position]) + "/" + str(int(days)*5)+" -- " + str(percentage) + "\n")
-
-
-
+        percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
+        print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
+              GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+              " -- " + str(percentage) + "\n")

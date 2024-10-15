@@ -3,11 +3,21 @@ import re
 import os
 import time
 import math
+import datetime
 
 """
 Thing to do:
 Add better names
 only 3 questions for 6th grade Giallo/Viola
+
+Draw a calender, ask what days you were out
+Redo points.
+day*questions=total points
+
+
+points/max_points (days*5)
+date(daysinmonth)
+when reading .csv dont grade any that are on days teacher was not there
 """
 
 lines=[]
@@ -28,6 +38,12 @@ PURPLE = "\033[35m"
 CYAN   = "\033[36m"
 WHITE  = "\033[37m"
 RESET  = "\033[0m"
+
+def clear_console():
+    if os.name=='nt':
+        os.system('cls')
+    else:
+        os.system('clear')  # Clear the terminal
 
 def color_to_number(color):
     if color == "Rosso":
@@ -73,6 +89,10 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
             i=i+1
         if row[7] != '':
             i=i+1
+        datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+        week_number = datetime_obj.weekday() #monday=0
+        if week_number == 5 or week_number == 6:
+            continue
         if most_recent_user_date[user] == current_date:
             continue
         if user in grades[color_to_number(color)]: # If user is already in the dict
@@ -117,25 +137,26 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
 
 
 while True:
-    os.system('clear')
+    clear_console()
     days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE)
 
     if days.isnumeric():
         break
-    os.system('clear')
+    clear_console()
     print(RED+"Enter a number.")
     time.sleep(3)
 
 # Display grades
-while True:
-    os.system('clear')  # Clear the terminal
-    print(GREEN)
-    for y in range(len(grades)):
-        current_color = colors[y]  # This is just for display
-        print(PURPLE + current_color + ":\n"+GREEN)
-        for i, key_at_position in enumerate(grades[y].keys()):  # Use 'y' to access grades, not 'current_color'
-            percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
-            print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100\n")
-    
-    break  # Exit the loop after printing once
+
+clear_console()
+print(GREEN)
+for y in range(len(grades)):
+    current_color = colors[y]  # This is just for display
+    print(PURPLE + current_color + ":\n"+GREEN)
+    for i, key_at_position in enumerate(grades[y].keys()):  # Use 'y' to access grades, not 'current_color'
+        percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
+        percentage = (int(grades[y][key_at_position])/(int(days)*5))*100
+        print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " + GREEN + str(grades[y][key_at_position]) + "/" + str(int(days)*5)+" -- " + str(percentage) + "\n")
+
+
 

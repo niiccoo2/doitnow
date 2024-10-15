@@ -46,6 +46,7 @@ def color_to_number(color):
 def new_email(email):
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
+    
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)

@@ -1,5 +1,8 @@
-# Python Starter
+# Do Now Autograder
 
-Quickly get started with [Python](https://www.python.org/) using this starter! 
+This project was made to help with grading over 4000 assignments every month.
 
-- If you want to upgrade Python, you can change the image in the [Dockerfile](./.devcontainer/Dockerfile).
+# Features:
+
+1. Uses .csv file from google form.
+2.

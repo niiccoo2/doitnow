@@ -137,4 +137,3 @@ while True:
             print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " + GREEN + str(percentage) + "/100\n")
     
     break  # Exit the loop after printing once
-

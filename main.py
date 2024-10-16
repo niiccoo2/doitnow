@@ -23,6 +23,8 @@ grades = [{}, {}, {}, {}, {}, {}]
 colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
+sus_days = []
+all_users = []
 
 # Variable to track the index of lines
 x = -1
@@ -64,6 +66,34 @@ def new_email(email):
     """Clean up the email address by removing the domain."""
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
+
+with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
+    read = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(read)  # Skip header row
+    
+    for row in read:
+        x += 1  # Increment line index
+        lines.append(row)  # Append the row to lines
+        current_line = lines[x]
+        user = new_email(current_line[1])  # Extract and clean email
+        current_date = current_line[0][:-8]  # Extract date from current line
+        color = row[2]  # Extract the color associated with the user
+        class_number = int(color_to_number(color))  # Convert color to index
+        if user not in all_users: # Check if the user is unique
+            all_users.append(user)
+        
+
+x = -1
+
+while True:
+    clear_console()
+    days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
+    
+    if days.isnumeric():
+        break
+    clear_console()
+    print(RED+"Enter a number.")
+    time.sleep(3)
     
 # Read the CSV file with form responses
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
@@ -116,15 +146,6 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
 # The following section is commented out but appears to be duplicate code
 # for processing a different CSV file.
 
-while True:
-    clear_console()
-    days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
-    
-    if days.isnumeric():
-        break
-    clear_console()
-    print(RED+"Enter a number.")
-    time.sleep(3)
 
 # Display grades
 clear_console()

@@ -118,7 +118,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
 
 while True:
     clear_console()
-    days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE)
+    days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
     
     if days.isnumeric():
         break

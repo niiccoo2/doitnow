@@ -7,12 +7,10 @@ import datetime
 
 """
 TODO:
-- Add better variable and function names.
 - Limit questions for 6th grade Giallo/Viola.
-- Implement a calendar feature to track attendance.
-- Update the points system: total points = days * questions.
-- Calculate final score: points/max_points (days * 5).
-- Only grade entries for days the teacher was present.
+- Implement a calendar feature to track teacher attendance
+OR
+- Use a percentage and ask the teacher if you want to not grade for that day.
 """
 
 # List to store lines from the CSV file
@@ -134,7 +132,7 @@ for y in range(len(grades)):
     print(PURPLE + current_color + ":\n" + GREEN)
     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
         # Calculate percentage score
-        percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
+        #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
         print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 

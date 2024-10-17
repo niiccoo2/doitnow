@@ -1,6 +1,6 @@
 # Do Now Autograder
 
-This project was made to help with grading over 1000 assignments every month.
+This project was made to help with grading over 1,000 assignments every month.
 
 # Features:
 

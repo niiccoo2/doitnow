@@ -14,3 +14,4 @@ This project was made to help with grading over 1,000 assignments every month.
 1. Figure out how many diffrent people respond that month.
 2. If someone usualy responds with orange class and once with yellow ask if you want to change that resonse to orange class.
 3. Maybe make if 50% don't respond thing per class?
+4. Add the diffrent number of questions for 6th grade.

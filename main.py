@@ -21,11 +21,12 @@ grades = [{}, {}, {}, {}, {}, {}]
 colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
-sus_days = []
+sus_days = {}
 all_users = []
 all_days = {}
 checking_date = ""
-checking_sus_days = False
+excluded_days = []
+# checking_sus_days = False
 
 # Variable to track the index of lines
 x = -1
@@ -83,23 +84,23 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
-            current_date = None
+            all_days = current_date : all_days
     x=-1
+    today_users = []
     for row in read:
         x += 1  # Increment line index
         lines.append(row)  # Append the row to lines
         current_line = lines[x]
         user = new_email(current_line[1])  # Extract and clean email
-        current_date = current_line[0][:-8]  # Extract date from current line
+        current_date = str(current_line[0][:-8])  # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
-        today_users = []
         if checking_date != current_date:
-            checking_date = current_date
-            if 
+            checking_date = current_date : None
+            if int(all_users/2) > today_users
+                sus_days = date: int(today_users/int(all_users/2)*100)
             today_users = []
-            sus_days.append(date)
-            checking_sus_days = False
+            # checking_sus_days = False
             today_users.append(user)
         else:
             today_users.append(user)
@@ -117,7 +118,17 @@ while True:
     clear_console()
     print(RED+"Enter a number.")
     time.sleep(3)
-    
+    for i in range(len(sus_days.keys)):
+        clear_console()
+        while True:
+            print(str(sus_days.keys[i], "may be a day that there was no school, or the teacher was absent. Only", sus_days[sus_days.keys[i]]), "percent of people responed on this day.")
+            override_sus_days = input("Do you want to include this day?").lower()
+            if override_sus_days = "no" or override_sus_days = "n":
+                continue
+            if override_sus_days = "yes" or override_sus_days = "y":
+                excluded_days.append(sus_days.keys[i])
+
+
 # Read the CSV file with form responses
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -149,7 +160,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
         
         # Skip weekends (Saturday=5, Sunday=6)
-        if week_number == 5 or week_number == 6:
+        if week_number == 5 or week_number == 6 or current_date in excluded_days:
             continue
         
         # Skip if user has already submitted for this date

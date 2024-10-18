@@ -23,6 +23,9 @@ names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
 sus_days = []
 all_users = []
+all_days = {}
+checking_date = ""
+checking_sus_days = False
 
 # Variable to track the index of lines
 x = -1
@@ -79,7 +82,29 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         class_number = int(color_to_number(color))  # Convert color to index
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
-        
+        if current_date not in all_days:
+            current_date = None
+    x=-1
+    for row in read:
+        x += 1  # Increment line index
+        lines.append(row)  # Append the row to lines
+        current_line = lines[x]
+        user = new_email(current_line[1])  # Extract and clean email
+        current_date = current_line[0][:-8]  # Extract date from current line
+        color = row[2]  # Extract the color associated with the user
+        class_number = int(color_to_number(color))  # Convert color to index
+        today_users = []
+        if checking_date != current_date:
+            checking_date = current_date
+            if 
+            today_users = []
+            sus_days.append(date)
+            checking_sus_days = False
+            today_users.append(user)
+        else:
+            today_users.append(user)
+
+
 
 x = -1
 

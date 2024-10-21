@@ -84,7 +84,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
-            all_days = current_date : all_days
+            all_days[current_date] = all_days
     x=-1
     today_users = []
     for row in read:
@@ -96,9 +96,9 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
         if checking_date != current_date:
-            checking_date = current_date : None
+            checking_date[current_date] = None
             if int(all_users/2) > today_users
-                sus_days = date: int(today_users/int(all_users/2)*100)
+                sus_days[date] = int(today_users/int(all_users/2)*100)
             today_users = []
             # checking_sus_days = False
             today_users.append(user)

@@ -44,10 +44,10 @@ RESET = "\033[0m"
 
 def clear_console():
     """Clear the terminal screen based on the OS."""
-    if os.name == 'nt':
-        os.system('cls')  # Windows
-    else:
-        os.system('clear')  # Unix/Linux
+    # if os.name == 'nt':
+    #     os.system('cls')  # Windows
+    # else:
+    #     os.system('clear')  # Unix/Linux
 
 def color_to_number(color):
     """Convert color name to an index number for grades."""
@@ -95,7 +95,10 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         current_date = str(current_line[0][:-8])  # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
-        if checking_date != current_date:
+        prit("THIS IS THE THING:")
+        print(str(checking_date.keys()[-1]))
+        exit()
+        if str(checking_date.keys()[-1]) != current_date:
             checking_date[current_date] = None
             if int(all_users/2) >= today_users:
                 sus_days[date] = int(today_users/int(all_users/2)*100)
@@ -108,6 +111,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
 
 
 x = -1
+
 
 while True:
     clear_console()
@@ -128,6 +132,7 @@ while True:
                 continue
             if override_sus_days == "yes" or override_sus_days == "y":
                 excluded_days.append(sus_days.keys[i])
+                days-=1
             else:
                 print("Invalid input.")
                 i-=1

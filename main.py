@@ -23,13 +23,13 @@ names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
 sus_days = {}
 all_users = []
-all_days = {}
+all_days = []
 checking_date = ""
 excluded_days = []
 # checking_sus_days = False
 
 # Variable to track the index of lines
-x = -1
+x = 0
 
 # ANSI color codes for terminal output
 BLACK = "\033[30m"
@@ -84,8 +84,8 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
-            all_days[current_date] = all_days
-    x=-1
+            all_days.append(current_date)
+    x=0
     today_users = []
     for row in read:
         x += 1  # Increment line index

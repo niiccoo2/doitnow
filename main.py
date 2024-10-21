@@ -84,7 +84,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
-            all_days[current_date] = all_days
+            all_days[current_date] = None
     x=-1
     today_users = []
     for row in read:

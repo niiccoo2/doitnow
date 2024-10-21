@@ -84,8 +84,13 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
+<<<<<<< HEAD
             all_days.append(current_date)
     x=0
+=======
+            all_days[current_date] = None
+    x=-1
+>>>>>>> 476a51a9d9ed59afb146278bfccb0a8e84b5d282
     today_users = []
     for row in read:
         x += 1  # Increment line index

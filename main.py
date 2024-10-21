@@ -43,11 +43,11 @@ WHITE = "\033[37m"
 RESET = "\033[0m"
 
 def clear_console():
-    """Clear the terminal screen based on the OS."""
-    # if os.name == 'nt':
-    #     os.system('cls')  # Windows
-    # else:
-    #     os.system('clear')  # Unix/Linux
+    # Clear the terminal screen based on the OS.
+    if os.name == 'nt':
+        os.system('cls')  # Windows
+    else:
+        os.system('clear')  # Unix/Linux
 
 def color_to_number(color):
     """Convert color name to an index number for grades."""
@@ -65,7 +65,7 @@ def color_to_number(color):
         return 5
 
 def new_email(email):
-    """Clean up the email address by removing the domain."""
+    # Clean up the email address by removing the domain.
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
 
@@ -97,7 +97,6 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         class_number = int(color_to_number(color))  # Convert color to index
         prit("THIS IS THE THING:")
         print(str(checking_date.keys()[-1]))
-        exit()
         if str(checking_date.keys()[-1]) != current_date:
             checking_date[current_date] = None
             if int(all_users/2) >= today_users:

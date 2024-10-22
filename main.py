@@ -119,7 +119,6 @@ x = -1
 
     # if days.isnumeric():
         # break
-s
 
 # Read the CSV file with form responses
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:

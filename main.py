@@ -29,7 +29,7 @@ excluded_days = []
 # checking_sus_days = False
 
 # Variable to track the index of lines
-x = 0
+x = -1
 
 # ANSI color codes for terminal output
 BLACK = "\033[30m"
@@ -84,13 +84,11 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if user not in all_users: # Check if the user is unique
             all_users.append(user)
         if current_date not in all_days:
-<<<<<<< HEAD
             all_days.append(current_date)
-    x=0
-=======
-            all_days[current_date] = None
+with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
+    read = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(read)  # Skip header row
     x=-1
->>>>>>> 476a51a9d9ed59afb146278bfccb0a8e84b5d282
     today_users = []
     for row in read:
         x += 1  # Increment line index
@@ -100,12 +98,10 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         current_date = str(current_line[0][:-8])  # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
-        prit("THIS IS THE THING:")
-        print(str(checking_date.keys()[-1]))
-        if str(checking_date.keys()[-1]) != current_date:
-            checking_date[current_date] = None
+        if checking_date == current_date:
+            checking_date = current_date
             if int(all_users/2) >= today_users:
-                sus_days[date] = int(today_users/int(all_users/2)*100)
+                sus_days[current_date] = int(today_users/int(all_users/2)*100)
             today_users = []
             # checking_sus_days = False
             today_users.append(user)
@@ -122,16 +118,17 @@ while True:
     #days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
     days = str(len(all_days))
 
-    if days.isnumeric():
-        break
-    clear_console()
-    print(RED+"Enter a number.")
-    time.sleep(3)
-    for i in range(len(sus_days.keys)):
+    # if days.isnumeric():
+    #     break
+    #clear_console()
+    #print(RED+"Enter a number.")
+    #time.sleep(3)
+    for i in range(len(sus_days.keys())):
         clear_console()
         while True:
-            print(str(sus_days.keys[i], "may be a day that there was no school, or the teacher was absent. Only", sus_days[sus_days.keys[i]]), "percent of people responed on this day.")
-            override_sus_days = input("Do you want to include this day?").lower()
+            time.sleep(1)
+            print(str(sus_days.keys[i], "may be a day that there was no school, or the teacher was absent. Only", sus_days[sus_days.keys()[i]]), "percent of people responed on this day.")
+            override_sus_days = input("Do you want to include this day?\n").lower() 
             if override_sus_days == "no" or override_sus_days == "n":
                 continue
             if override_sus_days == "yes" or override_sus_days == "y":

@@ -98,10 +98,10 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         current_date = str(current_line[0][:-8])  # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
-        if checking_date == current_date:
+        if checking_date != current_date:
             checking_date = current_date
-            if int(all_users/2) >= today_users:
-                sus_days[current_date] = int(today_users/int(all_users/2)*100)
+            if int(len(all_users)/2) >= len(today_users):
+                sus_days[current_date] = int(float(len(today_users)/len(all_users))*100)
             today_users = []
             # checking_sus_days = False
             today_users.append(user)
@@ -113,30 +113,32 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
 x = -1
 
 
-while True:
-    clear_console()
+# while True:
+    # clear_console()
     #days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
-    days = str(len(all_days))
+days = str(len(all_days))
 
     # if days.isnumeric():
     #     break
     #clear_console()
     #print(RED+"Enter a number.")
     #time.sleep(3)
-    for i in range(len(sus_days.keys())):
-        clear_console()
-        while True:
-            time.sleep(1)
-            print(str(sus_days.keys[i], "may be a day that there was no school, or the teacher was absent. Only", sus_days[sus_days.keys()[i]]), "percent of people responed on this day.")
-            override_sus_days = input("Do you want to include this day?\n").lower() 
-            if override_sus_days == "no" or override_sus_days == "n":
-                continue
-            if override_sus_days == "yes" or override_sus_days == "y":
-                excluded_days.append(sus_days.keys[i])
-                days-=1
-            else:
-                print("Invalid input.")
-                i-=1
+input(sus_days)
+for i in range(len(sus_days.keys())):
+    clear_console()
+    while True:
+        time.sleep(1)
+        print(str(str(sus_days.keys())[11:-2].strip("'").split("', '"), "may be a day that there was no school, or the teacher was absent. Only", sus_days[str(sus_days.keys())[11:-2].strip("'").split("', '")]), "percent of people responed on this day.")
+        override_sus_days = input("Do you want to include this day?\n").lower() 
+        if override_sus_days == "no" or override_sus_days == "n":
+            break
+        if override_sus_days == "yes" or override_sus_days == "y":
+            excluded_days.append(sus_days.keys[i])
+            days-=1
+            break
+        else:
+            print("Invalid input.")
+            i-=1
 
 
 # Read the CSV file with form responses

@@ -116,7 +116,7 @@ x = -1
 # while True:
     # clear_console()
     #days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
-    days = str(len(all_days))
+days = str(len(all_days))
 
     # if days.isnumeric():
     #     break

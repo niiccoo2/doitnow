@@ -7,10 +7,8 @@ import datetime
 
 """
 TODO:
-- Limit questions for 6th grade Giallo/Viola.
-- Implement a calendar feature to track teacher attendance
-OR
-- Use a percentage and ask the teacher if you want to not grade for that day.
+-- Reorder 7th/8th grade to | Time | Email | Class | Name |
+-- Somehow comebine the two .csv into one making sure that the time is still in order
 """
 
 # List to store lines from the CSV file
@@ -38,16 +36,17 @@ GREEN = "\033[32m"
 YELLOW = "\033[33m"
 BLUE = "\033[34m"
 PURPLE = "\033[35m"
-CYAN = "\033[36m"
+CYAN = "\033[36m" 
 WHITE = "\033[37m"
 RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    if os.name == 'nt':
-        os.system('cls')  # Windows
-    else:
-        os.system('clear')  # Unix/Linux
+    # if os.name == 'nt':
+    #     os.system('cls')  # Windows
+    # else:
+    #     os.system('clear')  # Unix/Linux
+    print("FAKE CLEAR")
 
 def color_to_number(color):
     """Convert color name to an index number for grades."""
@@ -74,71 +73,115 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     next(read)  # Skip header row
     
     for row in read:
-        x += 1  # Increment line index
-        lines.append(row)  # Append the row to lines
-        current_line = lines[x]
-        user = new_email(current_line[1])  # Extract and clean email
-        current_date = current_line[0][:-8]  # Extract date from current line
-        color = row[2]  # Extract the color associated with the user
-        class_number = int(color_to_number(color))  # Convert color to index
-        if user not in all_users: # Check if the user is unique
-            all_users.append(user)
-        if current_date not in all_days:
-            all_days.append(current_date)
+        if color_to_number(color) == 2 or color_to_number(color) == 5:
+            x += 1  # Increment line index
+            lines.append(row)  # Append the row to lines
+            current_line = lines[x]
+            user = new_email(current_line[1])  # Extract and clean email
+            current_date = current_line[0][:-8]  # Extract date from current line
+            color = row[2]  # Extract the color associated with the user
+            class_number = int(color_to_number(color))  # Convert color to index
+            # Convert date string to datetime object
+            datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+            week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+            
+            # Skip weekends (Saturday=5, Sunday=6)
+            if week_number == 5 or week_number == 6 or current_date in excluded_days:
+                continue
+            if user not in all_users: # Check if the user is unique
+                all_users.append(user)
+            if current_date not in all_days:
+                all_days.append(current_date)
+        else:
+            x += 1  # Increment line index
+            lines.append(row)  # Append the row to lines
+            current_line = lines[x]
+            user = new_email(current_line[1])  # Extract and clean email
+            current_date = current_line[0][:-8]  # Extract date from current line
+            color = row[2]  # Extract the color associated with the user
+            class_number = int(color_to_number(color))  # Convert color to index
+            # Convert date string to datetime object
+            datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+            week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+            
+            # Skip weekends (Saturday=5, Sunday=6)
+            if week_number == 5 or week_number == 6 or current_date in excluded_days:
+                continue
+            if user not in all_users: # Check if the user is unique
+                all_users.append(user)
+            if current_date not in all_days:
+                all_days.append(current_date)
+
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)  # Skip header row
-    x=-1
+    x = -1
     today_users = []
+    last_checked_date = ""  # Track the date to detect changes
     for row in read:
         x += 1  # Increment line index
-        lines.append(row)  # Append the row to lines
         current_line = lines[x]
         user = new_email(current_line[1])  # Extract and clean email
         current_date = str(current_line[0][:-8])  # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
-        if checking_date != current_date: #
-            checking_date = current_date
-            if int(len(all_users)/2) >= len(today_users):
-                sus_days[current_date] = int(len(today_users)/len(all_users)*100)
-            today_users = []
-            # checking_sus_days = False
+
+        # If the date has changed, process the previous day and reset `today_users`
+        if last_checked_date and current_date != last_checked_date:
+            # Check if the number of today's users is less than half of all users
+            if len(today_users) / len(all_users) <= 0.5:
+                sus_days[last_checked_date] = int(len(today_users) / len(all_users) * 100)
+            # Reset `today_users` for the new day
+            today_users = []  # Reset for the new day
+
+        if user not in today_users:
             today_users.append(user)
-        else:
-            today_users.append(user)
+
+        # Update the last_checked_date for the next iteration
+        last_checked_date = current_date
+
+    # Handle the last date after the loop ends
+    if last_checked_date and len(today_users) / len(all_users) <= 0.5:
+        sus_days[last_checked_date] = int(len(today_users) / len(all_users) * 100)
+
 
 
 
 x = -1
 
+# Assuming `all_days` is a list of days and `sus_days` is a dictionary with day as key
+days = len(all_days)  # Get the length of `all_days` list as an integer
+excluded_days = []    # List to keep track of excluded days
 
-# while True:
-    # clear_console()
-    #days = input(GREEN+"Benvenuto! Quanti giorni di 'Fai adesso' stai correggendo?\n\n--> "+PURPLE) 
-days = str(len(all_days))
+for day_key in list(sus_days.keys()):
 
-    # if days.isnumeric():
-    #     break
-    #clear_console()
-    #print(RED+"Enter a number.")
-    #time.sleep(3)
-input(sus_days)
-for i in range(len(sus_days.keys())):
-    clear_console()
+    # Convert date string to datetime object
+    datetime_obj = datetime.datetime.strptime(day_key, "%m/%d/%Y")
+    week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+        
+    # Skip weekends (Saturday=5, Sunday=6)
+    if week_number == 5 or week_number == 6:
+        continue
+
     while True:
-        time.sleep(1)
+        
+
         clear_console()
-        print(str(sus_days.keys())[11:-2].strip("'").split("', '")[i], "may be a day that there was no school, or the teacher was absent. Only", sus_days[str(sus_days.keys())[11:-2].strip("'").split("', '")[i]], "percent of people responed on this day.")
-        override_sus_days = input("Do you want to exclude this day?\n").lower() 
-        if override_sus_days == "no" or override_sus_days == "n":
+
+        print(f"{GREEN}{day_key}{PURPLE} may be a day that there was no school, or the teacher was absent. Only {GREEN}{sus_days[day_key]}{PURPLE} percent of people responded on this day.")
+        override_sus_days = input("Do you want to exclude this day? (y/N)\n" + GREEN).strip().lower()
+        
+        if override_sus_days in ["no", "n", ""]:
             break
-        if override_sus_days == "yes" or override_sus_days == "y":
-            excluded_days.append(sus_days.keys[i])
-            days-=1
+        elif override_sus_days in ["yes", "y"]:
+            excluded_days.append(day_key)
+            days -= 1
             break
         else:
-            print("Invalid input.")
+            print("Invalid input. Please enter 'yes' or 'no'.")
+        
+
+
 # Read the CSV file with form responses
 with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -177,6 +220,10 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         if most_recent_user_date[user] == current_date:
             continue
         
+        # Skip if day is in excuded days list
+        if current_date in excluded_days:
+            continue
+
         # Update grades for the user
         if user in grades[color_to_number(color)]:  # If user already exists
             grades[color_to_number(color)][user] += i  # Increment points
@@ -186,10 +233,6 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         # Update the most recent date for this user
         most_recent_user_date[user] = current_date
         names[user] = current_line[8]  # Store the user's name
-
-# The following section is commented out but appears to be duplicate code
-# for processing a different CSV file.
-
 
 # Display grades
 clear_console()
@@ -203,4 +246,10 @@ for y in range(len(grades)):
         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
         print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
-              " -- " + str(percentage) + "\n")
+              " -- " + str(int(percentage)) + "%\n")
+
+# 6th grade version      
+# percentage = (int(grades[y][key_at_position]) / (int(days) * 3)) * 100
+# print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
+#     GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 3) + 
+#     " -- " + str(int(percentage)) + "%\n")

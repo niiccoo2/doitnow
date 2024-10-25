@@ -8,7 +8,7 @@ import datetime
 """
 TODO:
 -- Reorder 7th/8th grade to | Time | Email | Class | Name |
--- Somehow comebine the two .csv into one making sure that the time is still in order
+-- Somehow combine the two .csv into one making sure that the time is still in order
 """
 
 # List to store lines from the CSV file
@@ -105,6 +105,8 @@ with open(file_name, newline='') as csvfile:
         # Convert date string to datetime object
         datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
         week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+        row.clear()
+    
         
         # Skip weekends (Saturday=5, Sunday=6)
         if week_number == 5 or week_number == 6 or current_date in excluded_days:

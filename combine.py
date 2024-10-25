@@ -29,7 +29,7 @@ combined_data = data1 + data2
 combined_data.sort(key=lambda row: datetime.datetime.strptime(row['Timestamp'], "%m/%d/%Y %H:%M:%S"))
 
 # Get fieldnames from the first file (assuming both CSVs have the same structure)
-fieldnames = combined_data[0].keys()
+fieldnames = combined_da
 
 # Write sorted and combined data to a new CSV
 write_combined_csv('Combined_Fai_Adesso.csv', combined_data, fieldnames)

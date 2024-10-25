@@ -13,6 +13,8 @@ TODO:
 
 # List to store lines from the CSV file
 lines = []
+#file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
+file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -68,51 +70,51 @@ def new_email(email):
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
 
-with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
+with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)  # Skip header row
     
     for row in read:
-        if color_to_number(color) == 2 or color_to_number(color) == 5:
-            x += 1  # Increment line index
-            lines.append(row)  # Append the row to lines
-            current_line = lines[x]
-            user = new_email(current_line[1])  # Extract and clean email
-            current_date = current_line[0][:-8]  # Extract date from current line
-            color = row[2]  # Extract the color associated with the user
-            class_number = int(color_to_number(color))  # Convert color to index
-            # Convert date string to datetime object
-            datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
-            week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+        # if color_to_number(color) == 2 or color_to_number(color) == 5:
+        #     x += 1  # Increment line index
+        #     lines.append(row)  # Append the row to lines
+        #     current_line = lines[x]
+        #     user = new_email(current_line[1])  # Extract and clean email
+        #     current_date = current_line[0][:-8]  # Extract date from current line
+        #     color = row[2]  # Extract the color associated with the user
+        #     class_number = int(color_to_number(color))  # Convert color to index
+        #     # Convert date string to datetime object
+        #     datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+        #     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
             
-            # Skip weekends (Saturday=5, Sunday=6)
-            if week_number == 5 or week_number == 6 or current_date in excluded_days:
-                continue
-            if user not in all_users: # Check if the user is unique
-                all_users.append(user)
-            if current_date not in all_days:
-                all_days.append(current_date)
-        else:
-            x += 1  # Increment line index
-            lines.append(row)  # Append the row to lines
-            current_line = lines[x]
-            user = new_email(current_line[1])  # Extract and clean email
-            current_date = current_line[0][:-8]  # Extract date from current line
-            color = row[2]  # Extract the color associated with the user
-            class_number = int(color_to_number(color))  # Convert color to index
-            # Convert date string to datetime object
-            datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
-            week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-            
-            # Skip weekends (Saturday=5, Sunday=6)
-            if week_number == 5 or week_number == 6 or current_date in excluded_days:
-                continue
-            if user not in all_users: # Check if the user is unique
-                all_users.append(user)
-            if current_date not in all_days:
-                all_days.append(current_date)
+        #     # Skip weekends (Saturday=5, Sunday=6)
+        #     if week_number == 5 or week_number == 6 or current_date in excluded_days:
+        #         continue
+        #     if user not in all_users: # Check if the user is unique
+        #         all_users.append(user)
+        #     if current_date not in all_days:
+        #         all_days.append(current_date)
+        # else:
+        x += 1  # Increment line index
+        lines.append(row)  # Append the row to lines
+        current_line = lines[x]
+        user = new_email(current_line[1])  # Extract and clean email
+        current_date = current_line[0][:-8]  # Extract date from current line
+        color = row[2]  # Extract the color associated with the user
+        class_number = int(color_to_number(color))  # Convert color to index
+        # Convert date string to datetime object
+        datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+        week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+        
+        # Skip weekends (Saturday=5, Sunday=6)
+        if week_number == 5 or week_number == 6 or current_date in excluded_days:
+            continue
+        if user not in all_users: # Check if the user is unique
+            all_users.append(user)
+        if current_date not in all_days:
+            all_days.append(current_date)
 
-with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
+with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)  # Skip header row
     x = -1
@@ -183,7 +185,7 @@ for day_key in list(sus_days.keys()):
 
 
 # Read the CSV file with form responses
-with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
+with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)  # Skip header row
     for row in read:
@@ -204,7 +206,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         
         # Count non-empty responses for the user
         i = 0
-        for j in range(3, 8):  # Columns 3 to 7 are question responses
+        for j in range(4, 8):  # Columns 4 to 8 are question responses
             if row[j] != '':
                 i += 1
         
@@ -232,7 +234,7 @@ with open('Fai Adesso - Form Responses 1.csv', newline='') as csvfile:
         
         # Update the most recent date for this user
         most_recent_user_date[user] = current_date
-        names[user] = current_line[8]  # Store the user's name
+        names[user] = current_line[3]  # Store the user's name
 
 # Display grades
 clear_console()

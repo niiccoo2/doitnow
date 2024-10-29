@@ -13,8 +13,8 @@ TODO:
 
 # List to store lines from the CSV file
 lines = []
-#file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
-file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
+file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
+#file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]

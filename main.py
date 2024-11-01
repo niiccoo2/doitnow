@@ -5,11 +5,11 @@ import time
 import math
 import datetime
 
-"""
-TODO:
--- Reorder 7th/8th grade to | Time | Email | Class | Name |
--- Somehow combine the two .csv into one making sure that the time is still in order
-"""
+
+# TODO:
+# -- Reorder 7th/8th grade to | Time | Email | Class | Name |
+# -- Somehow combine the two .csv into one making sure that the time is still in order
+
 
 # List to store lines from the CSV file
 lines = []
@@ -73,51 +73,31 @@ def new_email(email):
 
 with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
-    next(read)  # Skip header row
-    
+    next(read)  # Skip header row    
     for row in read:
-        # if color_to_number(color) == 2 or color_to_number(color) == 5:
-        #     x += 1  # Increment line index
-        #     lines.append(row)  # Append the row to lines
-        #     current_line = lines[x]
-        #     user = new_email(current_line[1])  # Extract and clean email
-        #     current_date = current_line[0][:-8]  # Extract date from current line
-        #     color = row[2]  # Extract the color associated with the user
-        #     class_number = int(color_to_number(color))  # Convert color to index
-        #     # Convert date string to datetime object
-        #     datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
-        #     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-            
-        #     # Skip weekends (Saturday=5, Sunday=6)
-        #     if week_number == 5 or week_number == 6 or current_date in excluded_days:
-        #         continue
-        #     if user not in all_users: # Check if the user is unique
-        #         all_users.append(user)
-        #     if current_date not in all_days:
-        #         all_days.append(current_date)
-        # else:
-        
         lines.append(row)  # Append the row to lines
-        print("Appending lines!")
-        current_line = lines[x]
-        user = new_email(current_line[1])  # Extract and clean email
-        current_date = current_line[0][:-8]  # Extract date from current line
-        color = row[2]  # Extract the color associated with the user
-        class_number = int(color_to_number(color))  # Convert color to index
-        # Convert date string to datetime object
-        datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
-        week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-        
-        
-        # Skip weekends (Saturday=5, Sunday=6)
-        if week_number == 5 or week_number == 6 or current_date in excluded_days:
-            continue
-        if user not in all_users: # Check if the user is unique
-            all_users.append(user)
-        if current_date not in all_days:
-            all_days.append(current_date)
 
-        x+=1 #increment each line index
+#print("Appending lines!")
+current_line = lines[x]
+user = new_email(current_line[1])  # Extract and clean email
+current_date = current_line[0].split(" ")[0]  # Extract date from current line
+color = current_line[2]  # Extract the color associated with the user
+class_number = int(color_to_number(color))  # Convert color to index
+# Convert date string to datetime object
+datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
+
+
+# Skip weekends (Saturday=5, Sunday=6)
+if week_number == 5 or week_number == 6 or current_date in excluded_days:
+    #continue
+    print("l")
+if user not in all_users: # Check if the user is unique
+    all_users.append(user)
+if current_date not in all_days:
+    all_days.append(current_date)
+
+x+=1 #increment each line index
 
 
 with open(file_name, newline='') as csvfile:
@@ -129,9 +109,9 @@ with open(file_name, newline='') as csvfile:
     for row in read:
         x += 1  # Increment line index
         current_line = lines[x]
-        print(current_line)
+        #print(current_line)
         user = new_email(current_line[1])  # Extract and clean email
-        current_date = str(current_line[0][:-8])  # Extract date from current line
+        current_date = current_line[0].split(" ")[0] # Extract date from current line
         color = row[2]  # Extract the color associated with the user
         class_number = int(color_to_number(color))  # Convert color to index
 
@@ -203,7 +183,7 @@ with open(file_name, newline='') as csvfile:
         if user not in most_recent_user_date:
             most_recent_user_date[user] = None  # Initialize date tracking
         
-        current_date = current_line[0][:-8]  # Extract date from current line
+        current_date = current_line[0].split(" ")[0]  # Extract date from current line
         
         if not user or len(user) == 0:
             continue  # Skip invalid or empty emails
@@ -218,7 +198,7 @@ with open(file_name, newline='') as csvfile:
                 i += 1
         
         # Convert date string to datetime object
-        datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
+        datetime_obj = datetime.datetime.strptime(current_date, '%m/%d/%Y')
         week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
         
         # Skip weekends (Saturday=5, Sunday=6)

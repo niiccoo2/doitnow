@@ -13,8 +13,8 @@ TODO:
 
 # List to store lines from the CSV file
 lines = []
-file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
-#file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
+#file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
+file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -26,10 +26,11 @@ all_users = []
 all_days = []
 checking_date = ""
 excluded_days = []
+current_line = []
 # checking_sus_days = False
 
 # Variable to track the index of lines
-x = -1
+x = 0
 
 # ANSI color codes for terminal output
 BLACK = "\033[30m"
@@ -95,7 +96,7 @@ with open(file_name, newline='') as csvfile:
         #     if current_date not in all_days:
         #         all_days.append(current_date)
         # else:
-        x += 1  # Increment line index
+        
         lines.append(row)  # Append the row to lines
         print("Appending lines!")
         current_line = lines[x]
@@ -106,7 +107,6 @@ with open(file_name, newline='') as csvfile:
         # Convert date string to datetime object
         datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
         week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-        row.clear()
         
         
         # Skip weekends (Saturday=5, Sunday=6)
@@ -116,6 +116,9 @@ with open(file_name, newline='') as csvfile:
             all_users.append(user)
         if current_date not in all_days:
             all_days.append(current_date)
+
+        x+=1 #increment each line index
+
 
 with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')

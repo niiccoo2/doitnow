@@ -7,8 +7,10 @@ import datetime
 
 
 # TODO:
-# -- Reorder 7th/8th grade to | Time | Email | Class | Name |
-# -- Somehow combine the two .csv into one making sure that the time is still in order
+# Somehow combine the two .csv into one making sure that the time is still in order
+# Get 7/8 working
+# Make program more user freindly, GUI?
+# ^ Make it easyer to change file name
 
 
 # List to store lines from the CSV file

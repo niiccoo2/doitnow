@@ -17,8 +17,12 @@ import datetime
 
 # List to store lines from the CSV file
 lines = []
-#file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
-file_name = "Fai Adesso - Form Responses TEST.csv" # real
+
+pickfile=2 # 1 = test, 2 = real
+if pickfile==1:
+    file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
+else:
+    file_name = "Fai Adesso Ottobre (Responses) - Form Responses 1.csv" # real
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -110,8 +114,6 @@ today_users = []
 last_checked_date = ""  # Track the date to detect changes
 
 for row in lines: # Adding users to sus_days
-    
-    current_line = lines[x]
     user = new_email(row[1])  # Extract and clean email
     current_date = row[0].split(" ")[0] # Extract date from current line
     color = row[2]  # Extract the color associated with the user
@@ -159,10 +161,12 @@ for day_key in list(sus_days.keys()):
         override_sus_days = input("Do you want to include this day? (Y/n)\n" + GREEN).strip().lower()
         
         if override_sus_days in ["yes", "y", ""]:
+            print("Include")
             break  # Exit loop if the day is included
         elif override_sus_days in ["no", "n"]:
             excluded_days.append(day_key)  # Add day to excluded days
             days -= 1  # Adjust the total days
+            print("Exclude")
             break  # Exit loop after excluding day
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
@@ -170,24 +174,21 @@ for day_key in list(sus_days.keys()):
         
 
 for row in lines: # Read the CSV file with form responses
-    
-    lines.append(row)  # Append the row to lines
-    current_line = lines[x]
-    user = new_email(current_line[1])  # Extract and clean email
+    user = new_email(row[1])  # Extract and clean email
     if user not in most_recent_user_date:
         most_recent_user_date[user] = None  # Initialize date tracking
     
-    current_date = current_line[0].split(" ")[0]  # Extract date from current line
+    current_date = row[0].split(" ")[0]  # Extract date from current line
     
     if not user or len(user) == 0:
         continue  # Skip invalid or empty emails
     
-    color = current_line[2]  # Extract the color associated with the user
+    color = row[2]  # Extract the color associated with the user
     class_number = int(color_to_number(color))  # Convert color to index
     
     # Count non-empty responses for the user
     i = 0
-    for j in range(4, 8):  # Columns 4 to 8 are question responses
+    for j in range(4, 9):  # Columns 4 to 8 are question responses
         if row[j] != '':
             i += 1
     
@@ -215,7 +216,7 @@ for row in lines: # Read the CSV file with form responses
     
     # Update the most recent date for this user
     most_recent_user_date[user] = current_date
-    names[user] = current_line[3]  # Store the user's name
+    names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
 # Display grades

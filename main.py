@@ -18,7 +18,7 @@ import datetime
 # List to store lines from the CSV file
 lines = []
 
-pickfile = 1 # 1 = test, 2 = real
+pickfile = 2 # 1 = test, 2 = real
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 else:

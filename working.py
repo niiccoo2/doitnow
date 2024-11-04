@@ -8,17 +8,17 @@ import datetime
 
 # TODO:
 # Somehow combine the two .csv into one making sure that the time is still in order
-# Get 7/8 working
 # Make program more user freindly, GUI?
-# ^ Make it easyer to change file name
+# ^ Make it easier to change file name
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
+# Autocorrect wrong class
 
 
 # List to store lines from the CSV file
 lines = []
 
-pickfile=2 # 1 = test, 2 = real
+pickfile = 2 # 1 = test, 2 = real
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 else:

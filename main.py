@@ -53,11 +53,11 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    # if os.name == 'nt':
-    #     os.system('cls')  # Windows
-    # else:
-    #     os.system('clear')  # Unix/Linux
-    print("FAKE CLEAR")
+    if os.name == 'nt':
+        os.system('cls')  # Windows
+    else:
+        os.system('clear')  # Unix/Linux
+    #print("FAKE CLEAR")
 
 def color_to_number(color):
     # Convert color name to an index number for grades.
@@ -155,18 +155,18 @@ for day_key in list(sus_days.keys()):
 
     while True:
         clear_console()
-        print(day_key)
-        print(sus_days[day_key])
+        #print(day_key)
+        #print(sus_days[day_key])
         print(f"{GREEN}{day_key}{PURPLE} may be a day that there was no school, or the teacher was absent. Only {GREEN}{sus_days[day_key]}{PURPLE} percent of people responded on this day.")
         override_sus_days = input("Do you want to include this day? (Y/n)\n" + GREEN).strip().lower()
         
         if override_sus_days in ["yes", "y", ""]:
-            print("Include")
+            #print("Include")
             break  # Exit loop if the day is included
         elif override_sus_days in ["no", "n"]:
             excluded_days.append(day_key)  # Add day to excluded days
             days -= 1  # Adjust the total days
-            print("Exclude")
+            #print("Exclude")
             break  # Exit loop after excluding day
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")

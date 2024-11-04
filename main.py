@@ -14,6 +14,8 @@ import datetime
 # Autocorrect wrong class
 # Chage the skip to per grade
 # Sort final by name?
+# Use https://pyinstaller.org/en/stable/ to make one file?
+# Test on mac
 
 # List to store lines from the CSV file
 lines = []
@@ -35,6 +37,7 @@ all_days = []
 checking_date = ""
 excluded_days = []
 current_line = []
+
 # checking_sus_days = False
 
 # Variable to track the index of lines
@@ -229,13 +232,13 @@ for y in range(len(grades)):
         # Calculate percentage score
         #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-        print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
+        print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
               " -- " + str(int(percentage)) + "%\n")
 
 # 6th grade version      
 # percentage = (int(grades[y][key_at_position]) / (int(days) * 3)) * 100
-# print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
+# print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
 #     GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 3) + 
 #     " -- " + str(int(percentage)) + "%\n")
 

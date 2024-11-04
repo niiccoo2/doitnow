@@ -5,7 +5,6 @@ import time
 import math
 import datetime
 
-
 # TODO:
 # Somehow combine the two .csv into one making sure that the time is still in order
 # Make program more user freindly, GUI?
@@ -13,7 +12,8 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 # Autocorrect wrong class
-
+# Chage the skip to per grade
+# Sort final by name?
 
 # List to store lines from the CSV file
 lines = []
@@ -238,3 +238,5 @@ for y in range(len(grades)):
 # print(names[key_at_position] + " / " + key_at_position + PURPLE + " --> " +
 #     GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 3) + 
 #     " -- " + str(int(percentage)) + "%\n")
+
+print(RESET)

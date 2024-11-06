@@ -17,9 +17,8 @@ def write_combined_csv(file_name, combined_data, fieldnames):
             writer.writerow({field: row.get(field, '') for field in fieldnames})
 
 # Read both CSV files
-file1 = 'Fai_Adesso_Form_Responses_1.csv'
-file2 = 'Fai_Adesso_Form_Responses_6th.csv'
-
+file1 = 'Fai Adesso Ottobre (Responses) - Form Responses 1.csv'
+file2 = 'Fai Adesso! 6th Ottobre  (Responses) - Form Responses 1.csv'
 data1, fieldnames1 = read_csv(file1)
 data2, fieldnames2 = read_csv(file2)
 

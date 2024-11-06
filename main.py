@@ -33,7 +33,10 @@ colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
 sus_days = {}
-all_users, all_days, excluded_days, current_line = []
+all_users = []
+all_days = []
+excluded_days = []
+current_line = []
 checking_date = ""
 
 # checking_sus_days = False

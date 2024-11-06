@@ -4,7 +4,6 @@ import os
 import time
 import math
 import datetime
-import keyboard
 
 # TODO:
 # Somehow combine the two .csv into one making sure that the time is still in order
@@ -17,6 +16,8 @@ import keyboard
 # Sort final by name?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
+# Pages
+# Select files with OS interface
 
 # List to store lines from the CSV file
 lines = []
@@ -38,6 +39,10 @@ all_days = []
 excluded_days = []
 current_line = []
 checking_date = ""
+excluded_days = []
+current_line = []
+corrected_users = []
+classes = []
 
 # checking_sus_days = False
 
@@ -175,7 +180,7 @@ for day_key in list(sus_days.keys()):
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
 
-        
+
 
 for row in lines: # Read the CSV file with form responses
     user = new_email(row[1])  # Extract and clean email
@@ -223,24 +228,18 @@ for row in lines: # Read the CSV file with form responses
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
+    if user not in corrected_users:
+        classes = []
+        corrected_users.append(user)
+        for i in range(len(lines)):
+            if user == lines[i].split(",")[1][0:9]:
+                lines[i].split(",")[2] == es
+        classes.sort()
+        
+
+    
+
 # Display grades
-# clear_console()
-
-# a=1
-# print(keyboard.read_key())
-# print(GREEN)
-# for y in range(len(grades)):
-#     current_color = colors[y]  # For display purposes
-#     print(PURPLE + current_color + ":\n" + GREEN)
-#     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
-#         # Calculate percentage score
-#         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#         print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
-#               " -- " + str(int(percentage)) + "%\n")
-
-
-# Working version
 clear_console()
 print(GREEN)
 for y in range(len(grades)):

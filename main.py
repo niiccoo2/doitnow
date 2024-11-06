@@ -16,6 +16,8 @@ import datetime
 # Sort final by name?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
+# Pages
+# Select files with OS interface
 
 # List to store lines from the CSV file
 lines = []
@@ -37,6 +39,8 @@ all_days = []
 checking_date = ""
 excluded_days = []
 current_line = []
+corrected_users = []
+classes = []
 
 # checking_sus_days = False
 
@@ -174,7 +178,7 @@ for day_key in list(sus_days.keys()):
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
 
-        
+
 
 for row in lines: # Read the CSV file with form responses
     user = new_email(row[1])  # Extract and clean email
@@ -221,6 +225,17 @@ for row in lines: # Read the CSV file with form responses
     most_recent_user_date[user] = current_date
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
+
+    if user not in corrected_users:
+        classes = []
+        corrected_users.append(user)
+        for i in range(len(lines)):
+            if user == lines[i].split(",")[1][0:9]:
+                lines[i].split(",")[2] == es
+        classes.sort()
+        
+
+    
 
 # Display grades
 clear_console()

@@ -4,6 +4,7 @@ import os
 import time
 import math
 import datetime
+import keyboard
 
 # TODO:
 # Somehow combine the two .csv into one making sure that the time is still in order
@@ -32,11 +33,8 @@ colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
 names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
 sus_days = {}
-all_users = []
-all_days = []
+all_users, all_days, excluded_days, current_line = []
 checking_date = ""
-excluded_days = []
-current_line = []
 
 # checking_sus_days = False
 
@@ -223,6 +221,23 @@ for row in lines: # Read the CSV file with form responses
     x += 1  # Increment line index
 
 # Display grades
+# clear_console()
+
+# a=1
+# print(keyboard.read_key())
+# print(GREEN)
+# for y in range(len(grades)):
+#     current_color = colors[y]  # For display purposes
+#     print(PURPLE + current_color + ":\n" + GREEN)
+#     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
+#         # Calculate percentage score
+#         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
+#         print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
+#               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#               " -- " + str(int(percentage)) + "%\n")
+
+
+# Working version
 clear_console()
 print(GREEN)
 for y in range(len(grades)):

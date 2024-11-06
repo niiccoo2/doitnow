@@ -226,13 +226,17 @@ for row in lines: # Read the CSV file with form responses
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
+    # Dont worry about what this does because it works 
     if user not in corrected_users:
         classes = []
         corrected_users.append(user)
         for i in range(len(lines)):
             if user == lines[i].split(",")[1][0:9]:
-                lines[i].split(",")[2] == es
+                lines[i].split(",")[2].append(classes)
         classes.sort()
+        for i in range(6):
+            if classes[int(len(classes)/2)] != colors[i]
+            grades[color_to_number(classes[int(len(classes)/2)])]
         
 
     

@@ -233,12 +233,13 @@ for row in lines: # Read the CSV file with form responses
         classes = []
         corrected_users.append(user)
         for i in range(len(lines)):
-            if user == lines[i].split(",")[1][0:9]:
-                lines[i].split(",")[2].append(classes)
+            #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
+            if user == lines[i][1][0:9]: 
+                lines[i][2].append(classes)
         classes.sort()
         for i in range(6):
-            if classes[int(len(classes)/2)] != colors[i]
-            grades[color_to_number(classes[int(len(classes)/2)])]
+            if classes[int(len(classes)/2)] != colors[i]:
+                grades[color_to_number(classes[int(len(classes)/2)])]
         
 
     

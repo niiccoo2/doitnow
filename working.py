@@ -22,7 +22,7 @@ import datetime
 # List to store lines from the CSV file
 lines = []
 
-pickfile = 1 # 1 = test, 2 = real
+pickfile = 2 # 1 = test, 2 = real
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 else:
@@ -63,11 +63,11 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    # if os.name == 'nt':
-    #     os.system('cls')  # Windows
-    # else:
-    #     os.system('clear')  # Unix/Linux
-    print("FAKE CLEAR")
+    if os.name == 'nt':
+        os.system('cls')  # Windows
+    else:
+        os.system('clear')  # Unix/Linux
+    #print("FAKE CLEAR")
 
 def color_to_number(color):
     # Convert color name to an index number for grades.
@@ -230,32 +230,32 @@ for row in lines: # Read the CSV file with form responses
     x += 1  # Increment line index
 
     # Dont worry about what this does because it works 
-    print(grades)
-    if user not in corrected_users:
-        missedpoints = 0
-        classes = []
-        corrected_users.append(user)
-        for q in range(len(lines)):
-            #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
-            if user == lines[q][1]:#[0:9]: 
-                #lines[i][2].append(classes)
-                classes.append(lines[q][2])
-        classes.sort()
-        rightclass = classes[int(len(classes)/2)]
-        print(rightclass, user)
-        for r in range(6):
-            if colors[r] != rightclass:
-                if user in grades[r]:
-                    # missedpoints += grades[r][user] 
-                    grades[r][user] += missedpoints
-                    del grades[r][user]
-        try:
-            grades[color_to_number(rightclass)][user] += missedpoints
-        except:
-            grades[color_to_number(rightclass)][user] = 0
-            grades[color_to_number(rightclass)][user] += missedpoints
+    # print(grades)
+    # if user not in corrected_users:
+    #     missedpoints = 0
+    #     classes = []
+    #     corrected_users.append(user)
+    #     for q in range(len(lines)):
+    #         #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
+    #         if user == lines[q][1]:#[0:9]: 
+    #             #lines[i][2].append(classes)
+    #             classes.append(lines[q][2])
+    #     classes.sort()
+    #     rightclass = classes[int(len(classes)/2)]
+    #     print(rightclass, user)
+    #     for r in range(6):
+    #         if colors[r] != rightclass:
+    #             if user in grades[r]:
+    #                 # missedpoints += grades[r][user] 
+    #                 grades[r][user] += missedpoints
+    #                 del grades[r][user]
+    #     try:
+    #         grades[color_to_number(rightclass)][user] += missedpoints
+    #     except:
+    #         grades[color_to_number(rightclass)][user] = 0
+    #         grades[color_to_number(rightclass)][user] += missedpoints
 
-print(grades)
+#print(grades)
 
 
 # Display grades

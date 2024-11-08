@@ -228,7 +228,12 @@ for row in lines: # Read the CSV file with form responses
         grades[color_to_number(color)][user] = i  # Set points
     
     # Update the most recent date for this user
-    most_recent_user_date[user] = current_date
+
+for row in lines:
+    user = new_email(row[1])  # Extract and clean email
+    current_date = row[0].split(" ")[0]
+    # most_recent_user_date[user] = current_date
+    
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 

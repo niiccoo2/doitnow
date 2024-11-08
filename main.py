@@ -18,6 +18,9 @@ import datetime
 # Test on mac
 # Pages
 # Select files with OS interface
+# Dot lower everything
+# Correct people that put wrong month in csv
+# Chage print colors to be same as class
 
 # List to store lines from the CSV file
 lines = []
@@ -235,25 +238,25 @@ for row in lines: # Read the CSV file with form responses
         missedpoints = 0
         classes = []
         corrected_users.append(user)
-        for q in range(len(lines)):
-            #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
-            if user == lines[q][1]:#[0:9]: 
+        for i in range(len(lines)):
+            if user == lines[i][1]:#[0:9]: 
                 #lines[i][2].append(classes)
-                classes.append(lines[q][2])
+                classes.append(lines[i][2])
         classes.sort()
         rightclass = classes[int(len(classes)/2)]
         print(rightclass, user)
-        for r in range(6):
-            if colors[r] != rightclass:
-                if user in grades[r]:
-                    # missedpoints += grades[r][user] 
-                    grades[r][user] += missedpoints
-                    del grades[r][user]
-        try:
-            grades[color_to_number(rightclass)][user] += missedpoints
-        except:
-            grades[color_to_number(rightclass)][user] = 0
-            grades[color_to_number(rightclass)][user] += missedpoints
+        for i in range(len(colors)):
+            if colors[i] != rightclass:
+                if user in grades[i]:
+                    missedpoints += int(grades[i][user])
+                    # grades[r][user] += missedpoints
+                    del grades[i][user]
+        # try:
+        grades[color_to_number(rightclass)][user] += missedpoints
+                    # missedpoints = 0
+        # except:
+            # grades[color_to_number(rightclass)][user] = 0
+            # grades[color_to_number(rightclass)][user] += missedpoints
         
 print(grades)
     

@@ -18,9 +18,7 @@ import datetime
 # Test on mac
 # Pages
 # Select files with OS interface
-# Dot lower everything
-# Correct people that put wrong month in csv
-# Chage print colors to be same as class
+# Change print to one line per class
 
 # List to store lines from the CSV file
 lines = []
@@ -47,7 +45,6 @@ current_line = []
 corrected_users = []
 classes = []
 missedpoints = 0
-longest_user_length = 0
 
 # checking_sus_days = False
 
@@ -67,11 +64,11 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    if os.name == 'nt':
-        os.system('cls')  # Windows
-    else:
-        os.system('clear')  # Unix/Linux
-    # print("FAKE CLEAR")
+    # if os.name == 'nt':
+    #     os.system('cls')  # Windows
+    # else:
+    #     os.system('clear')  # Unix/Linux
+    print("FAKE CLEAR")
 
 def color_to_number(color):
     # Convert color name to an index number for grades.
@@ -111,8 +108,8 @@ for row in lines: # Adding users and days to all_users and all_days while skipin
     # Convert date string to datetime object
     datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-
-
+    
+    
     # Skip weekends (Saturday=5, Sunday=6)
     if week_number == 5 or week_number == 6 or current_date in excluded_days:
         continue
@@ -120,8 +117,9 @@ for row in lines: # Adding users and days to all_users and all_days while skipin
         all_users.append(user)
     if current_date not in all_days:
         all_days.append(current_date)
-    if len(user.split(' ')[0]) > longest_user_length:
-        longest_user_length = len(user.split(' ')[0])
+
+
+
 
 today_users = []
 last_checked_date = ""  # Track the date to detect changes
@@ -161,7 +159,7 @@ for day_key in list(sus_days.keys()):
     # Convert date string to datetime object
     datetime_obj = datetime.datetime.strptime(day_key, "%m/%d/%Y")
     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-
+        
     # Skip weekends (Saturday=5, Sunday=6)
     if week_number == 5 or week_number == 6:
         continue
@@ -172,7 +170,7 @@ for day_key in list(sus_days.keys()):
         #print(sus_days[day_key])
         print(f"{GREEN}{day_key}{PURPLE} may be a day that there was no school, or the teacher was absent. Only {GREEN}{sus_days[day_key]}{PURPLE} percent of people responded on this day.")
         override_sus_days = input("Do you want to include this day? (Y/n)\n" + GREEN).strip().lower()
-
+        
         if override_sus_days in ["yes", "y", ""]:
             #print("Include")
             break  # Exit loop if the day is included
@@ -190,33 +188,33 @@ for row in lines: # Read the CSV file with form responses
     user = new_email(row[1])  # Extract and clean email
     if user not in most_recent_user_date:
         most_recent_user_date[user] = None  # Initialize date tracking
-
+    
     current_date = row[0].split(" ")[0]  # Extract date from current line
-
+    
     if not user or len(user) == 0:
         continue  # Skip invalid or empty emails
-
+    
     color = row[2]  # Extract the color associated with the user
     class_number = int(color_to_number(color))  # Convert color to index
-
+    
     # Count non-empty responses for the user
     i = 0
     for j in range(4, 9):  # Columns 4 to 8 are question responses
         if row[j] != '':
             i += 1
-
+    
     # Convert date string to datetime object
     datetime_obj = datetime.datetime.strptime(current_date, '%m/%d/%Y')
     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
-
+    
     # Skip weekends (Saturday=5, Sunday=6)
     if week_number == 5 or week_number == 6 or current_date in excluded_days:
         continue
-
+    
     # Skip if user has already submitted for this date
     if most_recent_user_date[user] == current_date:
         continue
-
+    
     # Skip if day is in excuded days list
     if current_date in excluded_days:
         continue
@@ -226,39 +224,40 @@ for row in lines: # Read the CSV file with form responses
         grades[color_to_number(color)][user] += i  # Increment points
     else:  # New user
         grades[color_to_number(color)][user] = i  # Set points
-
+    
     # Update the most recent date for this user
     most_recent_user_date[user] = current_date
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
-for row in lines:
-    user = new_email(row[1])  # Extract and clean email
     # Dont worry about what this does because it works 
+    print(grades)
     if user not in corrected_users:
         missedpoints = 0
         classes = []
         corrected_users.append(user)
-        for i in range(len(lines)):
-            if user == lines[i][1]:#[0:9]: 
+        for q in range(len(lines)):
+            #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
+            if user == lines[q][1]:#[0:9]: 
                 #lines[i][2].append(classes)
-                classes.append(lines[i][2])
+                classes.append(lines[q][2])
         classes.sort()
         rightclass = classes[int(len(classes)/2)]
-        for i in range(len(colors)):
-            if colors[i] != rightclass:
-                if user in grades[i]:
-                    missedpoints += int(grades[i][user])
-                    # grades[r][user] += missedpoints
-                    del grades[i][user]
-        # try:
-        grades[color_to_number(rightclass)][user] += missedpoints
-                    # missedpoints = 0
-        # except:
-            # grades[color_to_number(rightclass)][user] = 0
-            # grades[color_to_number(rightclass)][user] += missedpoints
-
-
+        print(rightclass, user)
+        for r in range(6):
+            if colors[r] != rightclass:
+                if user in grades[r]:
+                    # missedpoints += grades[r][user] 
+                    grades[r][user] += missedpoints
+                    del grades[r][user]
+        try:
+            grades[color_to_number(rightclass)][user] += missedpoints
+        except:
+            grades[color_to_number(rightclass)][user] = 0
+            grades[color_to_number(rightclass)][user] += missedpoints
+        
+print(grades)
+    
 
 # Display grades
 clear_console()
@@ -270,9 +269,18 @@ for y in range(len(grades)):
         # Calculate percentage score
         #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-        print(names[key_at_position].split(" ")[0] + " "*((longest_user_length + 2) - len(names[key_at_position].split(' ')[0])) + key_at_position + PURPLE + " "*5 +
+        print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
-              " "*len(str(str(grades[y][key_at_position]) + "/" + str(int(days) * 5))) + str(int(percentage)) + "%\n")
+              " -- " + str(int(percentage)) + "%\n")
+
+# clear_console()
+# print(GREEN)
+# current_color = colors[y]  # For display purposes
+# print(PURPLE + current_color + ":\n" + GREEN)
+# percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
+# print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
+#               GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#               " -- " + str(int(percentage)) + "%\n")
 
 # 6th grade version      
 # percentage = (int(grades[y][key_at_position]) / (int(days) * 3)) * 100

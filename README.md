@@ -9,3 +9,5 @@ This project was made to help with grading over 1,000 assignments every month.
 3. Only grades one submison per day per user.
 4. If more than 50% of people don't respond one day it will ask if you don't want to grade that day.
 5. 
+
+# By: NICO AND HAVIER

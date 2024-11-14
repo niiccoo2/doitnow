@@ -45,6 +45,8 @@ current_line = []
 corrected_users = []
 classes = []
 missedpoints = 0
+alp = "abcdefghijklmnopqrstuvwxyz"
+nameletters = []
 
 # checking_sus_days = False
 
@@ -230,8 +232,10 @@ for row in lines: # Read the CSV file with form responses
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
+for row in lines:
+    user = new_email(row[1])  # Extract and clean email
     # Dont worry about what this does because it works 
-    print(grades)
+    # print(grades)
     if user not in corrected_users:
         missedpoints = 0
         classes = []
@@ -243,21 +247,23 @@ for row in lines: # Read the CSV file with form responses
                 classes.append(lines[q][2])
         classes.sort()
         rightclass = classes[int(len(classes)/2)]
-        print(rightclass, user)
+        # print(rightclass, user)
         for r in range(6):
             if colors[r] != rightclass:
                 if user in grades[r]:
                     # missedpoints += grades[r][user] 
                     grades[r][user] += missedpoints
                     del grades[r][user]
-        try:
-            grades[color_to_number(rightclass)][user] += missedpoints
-        except:
-            grades[color_to_number(rightclass)][user] = 0
-            grades[color_to_number(rightclass)][user] += missedpoints
+        # try:
+                grades[color_to_number(rightclass)][user] += missedpoints
+        # except:
+            # grades[color_to_number(rightclass)][user] = 0
+            # grades[color_to_number(rightclass)][user] += missedpoints
         
-print(grades)
-            
+        # print(grades)
+                    
+
+
 y=0
 clear_console()
 print(GREEN)

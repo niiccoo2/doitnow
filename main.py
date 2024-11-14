@@ -260,9 +260,8 @@ print(grades)
             
 y=0
 clear_console()
-print(GREEN)
 current_color = colors[y]  # For display purposes
-print(PURPLE + current_color + ":\n" + GREEN)
+print(RESET + current_color + ":\n" + GREEN)
 for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +

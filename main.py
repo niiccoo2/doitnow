@@ -12,7 +12,7 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 # Autocorrect wrong class
-# Chage the skip to per grade
+# Chage the skip to per grade  
 # Sort final by name?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac

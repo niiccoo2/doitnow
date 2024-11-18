@@ -241,7 +241,7 @@ for row in lines:
         corrected_users.append(user)
         for q in range(len(lines)):
             #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
-            if user == lines[q][1]:#[0:9]: 
+            if user == new_email(lines[q][1]):#[0:9]: 
                 #lines[i][2].append(classes)
                 classes.append(lines[q][2])
         classes.sort()

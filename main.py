@@ -6,19 +6,16 @@ import math
 import datetime
 
 # TODO:
-# Somehow combine the two .csv into one making sure that the time is still in order
-# Make program more user freindly, GUI?
-# ^ Make it easier to change file name
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
-# Autocorrect wrong class
 # Chage the skip to per grade
-# Sort final by name?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 # Pages
-# Select files with OS interface
-# Change print to one line per class
+# Select files with OS interface <-- Easygui?
+# Make program more dynamic, read classes on the fly not hardcoded, etc
+# Fi the squared thing in xaviers code
+
 
 # List to store lines from the CSV file
 lines = []
@@ -63,8 +60,10 @@ PURPLE = "\033[35m"
 CYAN = "\033[36m" 
 WHITE = "\033[37m"
 RESET = "\033[0m"
-ORANGE = "\033[48:5:208m%s\033[m"
+ORANGE = ""
 
+
+print(ORANGE+"TEST!"+RESET)
 def clear_console():
     # Clear the terminal screen based on the OS.
     # if os.name == 'nt':
@@ -235,11 +234,10 @@ for row in lines: # Read the CSV file with form responses
 
 for row in lines:
     user = new_email(row[1])  # Extract and clean email
-    # Dont worry about what this does because it works 
     # print(grades)
     if user not in corrected_users:
         missedpoints = 0
-        classes = []
+        classes = [] #Move to the top/only read this once
         corrected_users.append(user)
         for q in range(len(lines)):
             #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...

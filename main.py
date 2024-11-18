@@ -18,11 +18,8 @@ import datetime
 # Fix the squared thing in xaviers code
 # Do red and gray color scheme
 
-
-# List to store lines from the CSV file
-lines = []
-
 pickfile = 1 # 1 = test, 2 = real
+
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 else:
@@ -37,18 +34,10 @@ sus_days = {}
 all_users = []
 all_days = []
 excluded_days = []
-current_line = []
-checking_date = ""
-excluded_days = []
-current_line = []
 corrected_users = []
 classes = []
 missedpoints = 0
-nameletters = []
-
-# checking_sus_days = False
-
-# Variable to track the index of lines
+lines = []
 x = 0
 
 # ANSI color codes for terminal output
@@ -102,8 +91,6 @@ with open(file_name, newline='') as csvfile:
         lines.append(row)  # Append the row to lines
 
 for row in lines: # Adding users and days to all_users and all_days while skiping weekends
-    #print("Appending lines!")
-    #current_line = lines[row] #Current_line is row
     user = new_email(row[1])  # Extract and clean email
     current_date = row[0].split(" ")[0]  # Extract date from current line
     color = row[2]  # Extract the color associated with the user
@@ -112,7 +99,6 @@ for row in lines: # Adding users and days to all_users and all_days while skipin
     datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
     week_number = datetime_obj.weekday()  # Get the weekday (Monday=0)
     
-    
     # Skip weekends (Saturday=5, Sunday=6)
     if week_number == 5 or week_number == 6 or current_date in excluded_days:
         continue
@@ -120,9 +106,6 @@ for row in lines: # Adding users and days to all_users and all_days while skipin
         all_users.append(user)
     if current_date not in all_days:
         all_days.append(current_date)
-
-
-
 
 today_users = []
 last_checked_date = ""  # Track the date to detect changes
@@ -154,7 +137,6 @@ for row in lines: # Adding users to sus_days
 if last_checked_date and len(today_users) / len(all_users) <= 0.5:
     sus_days[last_checked_date] = int(len(today_users) / len(all_users) * 100)
 
-
 days = len(all_days)  # Get the length of `all_days` list as an integer
 excluded_days = []    # List to keep track of excluded days
 
@@ -184,8 +166,6 @@ for day_key in list(sus_days.keys()):
             break  # Exit loop after excluding day
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
-
-
 
 for row in lines: # Read the CSV file with form responses
     user = new_email(row[1])  # Extract and clean email

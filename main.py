@@ -18,7 +18,7 @@ import datetime
 # Fix the squared thing in xaviers code
 # Do red and gray color scheme
 
-pickfile = 1 # 1 = test, 2 = real
+pickfile = 2 # 1 = test, 2 = real
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
@@ -49,11 +49,9 @@ BLUE = "\033[34m"
 PURPLE = "\033[35m"
 CYAN = "\033[36m" 
 WHITE = "\033[37m"
+GRAY = "\033[90m"
 RESET = "\033[0m"
-ORANGE = ""
 
-
-print(ORANGE+"TEST!"+RESET)
 def clear_console():
     # Clear the terminal screen based on the OS.
     # if os.name == 'nt':
@@ -153,8 +151,8 @@ for day_key in list(sus_days.keys()):
         clear_console()
         #print(day_key)
         #print(sus_days[day_key])
-        print(f"{GREEN}{day_key}{PURPLE} may be a day that there was no school, or the teacher was absent. Only {GREEN}{sus_days[day_key]}{PURPLE} percent of people responded on this day.")
-        override_sus_days = input("Do you want to include this day? (Y/n)\n" + GREEN).strip().lower()
+        print(f"{RED}{day_key}{GRAY} may be a day that there was no school, or the teacher was absent. Only {RED}{sus_days[day_key]}{GRAY} percent of people responded on this day.")
+        override_sus_days = input("Do you want to include this day? (Y/n)\n" + RED).strip().lower()
         
         if override_sus_days in ["yes", "y", ""]:
             #print("Include")
@@ -242,17 +240,17 @@ for row in lines:
                     
 # Display grades
 clear_console()
-print(GREEN)
+print(RED)
 for y in range(len(grades)):
     current_color = colors[y]  # For display purposes
-    print(PURPLE + current_color + ":\n" + GREEN)
+    print(GRAY + current_color + ":\n" + RED)
     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
         # Calculate percentage score
         #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
         percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-        print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-              GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
-              " -- " + str(int(percentage)) + "%\n")
+        print(names[key_at_position] + GRAY + " -- " + RED + key_at_position + GRAY + " --> " +
+              RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + GRAY + 
+              " -- " + RED + str(int(percentage)) + "%\n")
 
 
 # OLD PART REMOVE IF NOT NEEDED
@@ -267,53 +265,53 @@ for y in range(len(grades)):
 #                 " -- " + str(int(percentage)) + "%\n")
 # y=1
 
-# print(GREEN)
+# print(RED)
 # current_color = colors[y]  # For display purposes
-# print(PURPLE + current_color + ":\n" + GREEN)
+# print(GRAY + current_color + ":\n" + RED)
 # for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
 #     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#                 GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#     print(names[key_at_position] + " -- " + key_at_position + GRAY + " --> " +
+#                 RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
 #                 " -- " + str(int(percentage)) + "%\n")
 # y=2
 
-# print(GREEN)
+# print(RED)
 # current_color = colors[y]  # For display purposes
-# print(PURPLE + current_color + ":\n" + GREEN)
+# print(GRAY + current_color + ":\n" + RED)
 # for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
 #     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#                 GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#     print(names[key_at_position] + " -- " + key_at_position + GRAY + " --> " +
+#                 RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
 #                 " -- " + str(int(percentage)) + "%\n")
 # y=3
 
-# print(GREEN)
+# print(RED)
 # current_color = colors[y]  # For display purposes
-# print(PURPLE + current_color + ":\n" + GREEN)
+# print(GRAY + current_color + ":\n" + RED)
 # for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
 #     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#                 GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#     print(names[key_at_position] + " -- " + key_at_position + GRAY + " --> " +
+#                 RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
 #                 " -- " + str(int(percentage)) + "%\n")
 # y=4
 
-# print(GREEN)
+# print(RED)
 # current_color = colors[y]  # For display purposes
-# print(PURPLE + current_color + ":\n" + GREEN)
+# print(GRAY + current_color + ":\n" + RED)
 # for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
 #     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#                 GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#     print(names[key_at_position] + " -- " + key_at_position + GRAY + " --> " +
+#                 RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
 #                 " -- " + str(int(percentage)) + "%\n")
 # y=5
 
-# print(GREEN)
+# print(RED)
 # current_color = colors[y]  # For display purposes
-# print(PURPLE + current_color + ":\n" + GREEN)
+# print(GRAY + current_color + ":\n" + RED)
 # for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
 #     percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
-#     print(names[key_at_position] + " -- " + key_at_position + PURPLE + " --> " +
-#                 GREEN + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
+#     print(names[key_at_position] + " -- " + key_at_position + GRAY + " --> " +
+#                 RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + 
 #                 " -- " + str(int(percentage)) + "%\n")
 
 print(RESET)

@@ -18,6 +18,7 @@ import datetime
 # Test on mac
 # Pages
 # Select files with OS interface <-- Easygui?
+# Move all people who responded in the wrong form
 
 # TODO, Xavier:
 # Fix the squared thing in xaviers code

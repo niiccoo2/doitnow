@@ -9,14 +9,18 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 # Chage the skip to per grade
+# Make program more dynamic, read classes on the fly not hardcoded, etc
+# ^ Don't hard code class names
+
+# TODO, Nico:
+# Do red and gray color scheme
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 # Pages
 # Select files with OS interface <-- Easygui?
-# Make program more dynamic, read classes on the fly not hardcoded, etc
-# ^ Don't hard code class names
+
+# TODO, Xavier:
 # Fix the squared thing in xaviers code
-# Do red and gray color scheme
 
 pickfile = 1 # 1 = test, 2 = real
 

@@ -183,7 +183,7 @@ for row in lines: # Read the CSV file with form responses
     # Count non-empty responses for the user
     i = 0
     for j in range(4, 9):  # Columns 4 to 8 are question responses
-        if row[j] != '':
+        if row[j] != '' and row[j].lower() != "idk" and row[j].lower() != "i dont know" and row[j].lower() != "idk." and row[j].lower() != "i dont know." and row[j].lower() != "i don't know" and row[j].lower() != "i don't know.":
             i += 1
     
     # Convert date string to datetime object

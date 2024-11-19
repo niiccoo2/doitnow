@@ -9,14 +9,19 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 # Chage the skip to per grade
+# Make program more dynamic, read classes on the fly not hardcoded, etc
+# ^ Don't hard code class names
+
+# TODO, Nico:
+# Do red and gray color scheme
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 # Pages
 # Select files with OS interface <-- Easygui?
-# Make program more dynamic, read classes on the fly not hardcoded, etc
-# ^ Don't hard code class names
+# Move all people who responded in the wrong form
+
+# TODO, Xavier:
 # Fix the squared thing in xaviers code
-# Do red and gray color scheme
 
 pickfile = 2 # 1 = test, 2 = real
 
@@ -181,7 +186,7 @@ for row in lines: # Read the CSV file with form responses
     # Count non-empty responses for the user
     i = 0
     for j in range(4, 9):  # Columns 4 to 8 are question responses
-        if row[j] != '':
+        if row[j] != '' and row[j].lower() != "idk" and row[j].lower() != "i dont know" and row[j].lower() != "idk." and row[j].lower() != "i dont know." and row[j].lower() != "i don't know" and row[j].lower() != "i don't know.":
             i += 1
     
     # Convert date string to datetime object

@@ -7,9 +7,12 @@ import datetime
 
 # TODO:
 # Make program more dynamic, read classes on the fly not hardcoded, etc
+# ^ Any number of questions
 # ^ Don't hard code class names
 
 # TODO, Nico:
+# Reorder to class then name in csv and in code
+# Add vars for locations of items in csv
 # Move all people who responded in the wrong form
 # Select files with OS interface <-- Easygui?
 # Use https://pyinstaller.org/en/stable/ to make one file?

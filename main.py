@@ -13,7 +13,6 @@ import datetime
 # TODO, Nico:
 # Reorder to class then name in csv and in code
 # Add vars for locations of items in csv
-# Move all people who responded in the wrong form
 # Select files with OS interface <-- Easygui?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
@@ -96,9 +95,14 @@ def findclass(user):
 
 with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
+    for row in read:
+        header=row
+        break
     next(read)  # Skip header row    
     for row in read:
         lines.append(row)  # Append the row to lines
+
+question_amount=len(row)-4
 
 for row in lines: # Adding users and days to all_users and all_days while skiping weekends
     user = new_email(row[1])  # Extract and clean email
@@ -192,7 +196,7 @@ for row in lines: # Read the CSV file with form responses
     
     # Count non-empty responses for the user
     i = 0
-    for j in range(4, 9):  # Columns 4 to 8 are question responses
+    for j in range(4, len(header)):  # Columns 4 to 8 are question responses
         if row[j] != '' and row[j].lower() != "idk" and row[j].lower() != "i dont know" and row[j].lower() != "idk." and row[j].lower() != "i dont know." and row[j].lower() != "i don't know" and row[j].lower() != "i don't know.":
             i += 1
     
@@ -275,19 +279,6 @@ for row in lines:
 for i in range(len(all_users)):
     grades[colors.index(currentclass)][user] += classes[findclass(all_users[i])][1]
 
-
-
-
-        
-
-print("""
-Roses are red,
-Violets are blue,
-Unexpected error on line one hundred and two.   
-""")
-time.sleep(7.5)
-# """
-     
 # Display grades
 clear_console()
 print(RED)
@@ -297,9 +288,9 @@ for y in range(len(grades)):
     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
         # Calculate percentage score
         #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)
-        percentage = (int(grades[y][key_at_position]) / (int(days) * 5)) * 100
+        percentage = (int(grades[y][key_at_position]) / (int(days) * question_amount)) * 100
         print(names[key_at_position] + GRAY + " -- " + RED + key_at_position + GRAY + " --> " +
-              RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + GRAY + 
+              RED + str(grades[y][key_at_position]) + "/" + str(int(days) * question_amount) + GRAY + 
               " -- " + RED + str(int(percentage)) + "%\n")
 findclass("I AM STEVE")
 print(RESET)

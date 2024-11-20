@@ -22,7 +22,7 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 
-pickfile = 2 # 1 = test, 2 = real
+pickfile = 1 # 1 = test, 2 = real
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
@@ -267,7 +267,14 @@ for row in lines:
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
         # print(classes)
     if currentclass != classes[findclass(user)][-1]:
-        pass
+        classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
+        del grades[colors.index(currentclass)][user]
+for i in range(len(all_users)):
+    grades[colors.index(currentclass)][user] += classes[findclass(all_users[i])][1]
+
+
+
+
         
 
 print("""

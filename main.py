@@ -89,6 +89,11 @@ def new_email(email):
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
 
+def findclass(user):
+    for f in range(len(classes)):
+        if user in classes[f]:
+            return f
+
 with open(file_name, newline='') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     next(read)  # Skip header row    
@@ -218,33 +223,64 @@ for row in lines: # Read the CSV file with form responses
     names[user] = row[3]  # Store the user's name
     x += 1  # Increment line index
 
+    currentclass = row[2] # this finds the class
+    if user not in corrected_users: # checks if the user is unique so far
+        classes.append([user, 0, [currentclass]]) # adds them to a list of people with some info
+        corrected_users.append(user) # makes them not count as unique later
+    else:
+        classes[findclass(user)][-1].append(currentclass) # adds their class to the data
+    classes[findclass(user)][-1].sort() # sorts the data for later use
+
+# for row in lines:
+#     user = new_email(row[1])  # Extract and clean email
+#     # print(grades)
+#     if user not in corrected_users:
+#         missedpoints = 0
+#         classes = [] #Move to the top/only read this once
+#         corrected_users.append(user)
+#         for q in range(len(lines)):
+#             #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
+#             if user == new_email(lines[q][1]):#[0:9]: 
+#                 #lines[i][2].append(classes)
+#                 classes.append(lines[q][2])
+#         classes.sort()
+#         rightclass = classes[int(len(classes)/2)]
+#         # print(rightclass, user)
+#         for r in range(6):
+#             if colors[r] != rightclass:
+#                 if user in grades[r]:
+#                     # missedpoints += grades[r][user] 
+#                     grades[r][user] += missedpoints
+#                     del grades[r][user]
+#         # try:
+#                 grades[color_to_number(rightclass)][user] += missedpoints
+#         # except:
+#             # grades[color_to_number(rightclass)][user] = 0
+#             # grades[color_to_number(rightclass)][user] += missedpoints
+
+# """
+# classes = [["user", missedpoints, ["class", "class", ect]],[],[]]
+
+corrected_users = []
 for row in lines:
-    user = new_email(row[1])  # Extract and clean email
-    # print(grades)
+    currentclass = row[2]
+    user = new_email(row[1])
     if user not in corrected_users:
-        missedpoints = 0
-        classes = [] #Move to the top/only read this once
         corrected_users.append(user)
-        for q in range(len(lines)):
-            #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
-            if user == new_email(lines[q][1]):#[0:9]: 
-                #lines[i][2].append(classes)
-                classes.append(lines[q][2])
-        classes.sort()
-        rightclass = classes[int(len(classes)/2)]
-        # print(rightclass, user)
-        for r in range(6):
-            if colors[r] != rightclass:
-                if user in grades[r]:
-                    # missedpoints += grades[r][user] 
-                    grades[r][user] += missedpoints
-                    del grades[r][user]
-        # try:
-                grades[color_to_number(rightclass)][user] += missedpoints
-        # except:
-            # grades[color_to_number(rightclass)][user] = 0
-            # grades[color_to_number(rightclass)][user] += missedpoints
-                    
+        classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
+        # print(classes)
+    if currentclass != classes[findclass(user)][-1]:
+        pass
+        
+
+print("""
+Roses are red,
+Violets are blue,
+Unexpected error on line one hundred and two.   
+""")
+time.sleep(7.5)
+# """
+     
 # Display grades
 clear_console()
 print(RED)
@@ -258,5 +294,5 @@ for y in range(len(grades)):
         print(names[key_at_position] + GRAY + " -- " + RED + key_at_position + GRAY + " --> " +
               RED + str(grades[y][key_at_position]) + "/" + str(int(days) * 5) + GRAY + 
               " -- " + RED + str(int(percentage)) + "%\n")
-
+findclass("I AM STEVE")
 print(RESET)

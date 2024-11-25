@@ -19,6 +19,7 @@ import datetime
 # Pages
 
 # TODO, Xavier:
+# Figure out why the scores are wrong
 # Fix the squared thing in xaviers code
 # Chage the skip to per grade
 # Make code into functions to make easier to read

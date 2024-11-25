@@ -24,6 +24,10 @@ import datetime
 # Make code into functions to make easier to read
 # ^ Add all of the skips for weekends, double, etc to function
 
+date=0
+email=1
+class_color=2
+name=3
 pickfile = 1 # 1 = test, 2 = real
 
 if pickfile==1:
@@ -105,9 +109,9 @@ with open(file_name, newline='') as csvfile:
 question_amount=len(row)-4
 
 for row in lines: # Adding users and days to all_users and all_days while skiping weekends
-    user = new_email(row[1])  # Extract and clean email
-    current_date = row[0].split(" ")[0]  # Extract date from current line
-    color = row[2]  # Extract the color associated with the user
+    user = new_email(row[email])  # Extract and clean email
+    current_date = row[date].split(" ")[0]  # Extract date from current line
+    color = row[class_color]  # Extract the color associated with the user
     class_number = int(color_to_number(color))  # Convert color to index
     # Convert date string to datetime object
     datetime_obj = datetime.datetime.strptime(current_date, "%m/%d/%Y")
@@ -125,9 +129,9 @@ today_users = []
 last_checked_date = ""  # Track the date to detect changes
 
 for row in lines: # Adding users to sus_days
-    user = new_email(row[1])  # Extract and clean email
-    current_date = row[0].split(" ")[0] # Extract date from current line
-    color = row[2]  # Extract the color associated with the user
+    user = new_email(row[email])  # Extract and clean email
+    current_date = row[date].split(" ")[0] # Extract date from current line
+    color = row[class_color]  # Extract the color associated with the user
     class_number = int(color_to_number(color))  # Convert color to index
 
     # If the date has changed, process the previous day and reset `today_users`
@@ -182,16 +186,16 @@ for day_key in list(sus_days.keys()):
             print("Invalid input. Please enter 'yes' or 'no'.")
 
 for row in lines: # Read the CSV file with form responses
-    user = new_email(row[1])  # Extract and clean email
+    user = new_email(row[email])  # Extract and clean email
     if user not in most_recent_user_date:
         most_recent_user_date[user] = None  # Initialize date tracking
     
-    current_date = row[0].split(" ")[0]  # Extract date from current line
+    current_date = row[date].split(" ")[0]  # Extract date from current line
     
     if not user or len(user) == 0:
         continue  # Skip invalid or empty emails
     
-    color = row[2]  # Extract the color associated with the user
+    color = row[class_color]  # Extract the color associated with the user
     class_number = int(color_to_number(color))  # Convert color to index
     
     # Count non-empty responses for the user
@@ -224,10 +228,10 @@ for row in lines: # Read the CSV file with form responses
     
     # Update the most recent date for this user
     most_recent_user_date[user] = current_date
-    names[user] = row[3]  # Store the user's name
+    names[user] = row[name]  # Store the user's name
     x += 1  # Increment line index
 
-    currentclass = row[2] # this finds the class
+    currentclass = row[class_color] # this finds the class
     if user not in corrected_users: # checks if the user is unique so far
         classes.append([user, 0, [currentclass]]) # adds them to a list of people with some info
         corrected_users.append(user) # makes them not count as unique later
@@ -235,40 +239,12 @@ for row in lines: # Read the CSV file with form responses
         classes[findclass(user)][-1].append(currentclass) # adds their class to the data
     classes[findclass(user)][-1].sort() # sorts the data for later use
 
-# for row in lines:
-#     user = new_email(row[1])  # Extract and clean email
-#     # print(grades)
-#     if user not in corrected_users:
-#         missedpoints = 0
-#         classes = [] #Move to the top/only read this once
-#         corrected_users.append(user)
-#         for q in range(len(lines)):
-#             #if user == lines[i].split(",")[1][0:9]: # Lines is a list of lists, I don't think you can split a list...
-#             if user == new_email(lines[q][1]):#[0:9]: 
-#                 #lines[i][2].append(classes)
-#                 classes.append(lines[q][2])
-#         classes.sort()
-#         rightclass = classes[int(len(classes)/2)]
-#         # print(rightclass, user)
-#         for r in range(6):
-#             if colors[r] != rightclass:
-#                 if user in grades[r]:
-#                     # missedpoints += grades[r][user] 
-#                     grades[r][user] += missedpoints
-#                     del grades[r][user]
-#         # try:
-#                 grades[color_to_number(rightclass)][user] += missedpoints
-#         # except:
-#             # grades[color_to_number(rightclass)][user] = 0
-#             # grades[color_to_number(rightclass)][user] += missedpoints
-
-# """
 # classes = [["user", missedpoints, ["class", "class", ect]],[],[]]
 
 corrected_users = []
 for row in lines:
-    currentclass = row[2]
-    user = new_email(row[1])
+    currentclass = row[class_color]
+    user = new_email(row[email])
     if user not in corrected_users:
         corrected_users.append(user)
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]

@@ -6,9 +6,8 @@ import math
 import datetime
 
 # TODO:
-# Make program more dynamic, read classes on the fly not hardcoded, etc
-# ^ Any number of questions
-# ^ Don't hard code class names
+# Make code into functions to make easier to read
+# ^ Add all of the skips for weekends, double, etc to function
 
 # TODO, Nico:
 # Reorder to class then name in csv and in code
@@ -16,14 +15,10 @@ import datetime
 # Select files with OS interface <-- Easygui?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
-# Pages
 
 # TODO, Xavier:
-# Figure out why the scores are wrong
-# Fix the squared thing in xaviers code
-# Chage the skip to per grade
-# Make code into functions to make easier to read
-# ^ Add all of the skips for weekends, double, etc to function
+# Figure out why the scores are wrong -- Has to do with your class correction code
+# Don't hard code class names
 
 date=0
 email=1
@@ -269,5 +264,5 @@ for y in range(len(grades)):
         print(names[key_at_position] + GRAY + " -- " + RED + key_at_position + GRAY + " --> " +
               RED + str(grades[y][key_at_position]) + "/" + str(int(days) * question_amount) + GRAY + 
               " -- " + RED + str(int(percentage)) + "%\n")
-findclass("I AM STEVE")
+
 print(RESET)

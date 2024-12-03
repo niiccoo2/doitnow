@@ -246,11 +246,14 @@ for row in lines:
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
         # print(classes)
     if currentclass != classes[findclass(user)][-1]:
-        classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
+        classes[findclass(user)][1]+= grades[colors.index(currentclass)][user]
         del grades[colors.index(currentclass)][user]
 for i in range(len(all_users)):
-    grades[colors.index(currentclass)][user] += classes[findclass(all_users[i])][1]
-
+    for l in range(len(colors)):
+    # try:
+        grades[colors.index(classes[findclass(all_users[i])][-1][color_to_number(classes[findclass(all_users[i])][-1][len(classes[findclass(all_users[i])][-1])/2])])][all_users[i]] += classes[findclass(all_users[i])][1]
+    # except:
+        # pass
 # Display grades
 clear_console()
 print(RED)

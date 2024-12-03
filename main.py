@@ -246,14 +246,23 @@ for row in lines:
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
         # print(classes)
     if currentclass != classes[findclass(user)][-1]:
-        classes[findclass(user)][1]+= grades[colors.index(currentclass)][user]
+        # print(grades[colors.index(currentclass)][user])
+        # exit()
+        classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
+        # print(findclass(user))
+        # exit()
         del grades[colors.index(currentclass)][user]
+#grades[colors.index(classes[findclass(all_users[i])][-1][color_to_number(classes[findclass(all_users[i])][-1][len(classes[findclass(all_users[i])][-1])/2])])][all_users[i]] += classes[findclass(all_users[i])][1]
+
+# print(classes[findclass(all_users[0])][1])
+# exit()
 for i in range(len(all_users)):
     for l in range(len(colors)):
-    # try:
-        grades[colors.index(classes[findclass(all_users[i])][-1][color_to_number(classes[findclass(all_users[i])][-1][len(classes[findclass(all_users[i])][-1])/2])])][all_users[i]] += classes[findclass(all_users[i])][1]
-    # except:
-        # pass
+        # print(all_users[i+1])
+        # print(findclass(all_users[i+1]))
+        # exit()
+        if all_users[i] in grades[color_to_number(colors[l])]:
+            grades[color_to_number(colors[l])][all_users[i]] += classes[findclass(all_users[i])-1][1]
 # Display grades
 clear_console()
 print(RED)

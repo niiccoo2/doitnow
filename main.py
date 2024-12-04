@@ -98,7 +98,7 @@ with open(file_name, newline='') as csvfile:
     for row in read:
         header=row
         break
-    next(read)  # Skip header row    
+    # next(read)  # Skip header row    
     for row in read:
         lines.append(row)  # Append the row to lines
 
@@ -258,11 +258,10 @@ for row in lines:
 # exit()
 for i in range(len(all_users)):
     for l in range(len(colors)):
-        # print(all_users[i+1])
-        # print(findclass(all_users[i+1]))
+        # print(classes[findclass(all_users[i])][-1])
         # exit()
-        if all_users[i] in grades[color_to_number(colors[l])]:
-            grades[color_to_number(colors[l])][all_users[i]] += classes[findclass(all_users[i])-1][1]
+        if classes[findclass(all_users[i])][-1] == colors[l]:
+            grades[color_to_number(colors[l])][all_users[i]] += classes[findclass(all_users[i])][1]
 # Display grades
 clear_console()
 print(RED)

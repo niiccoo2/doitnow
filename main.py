@@ -17,6 +17,7 @@ import datetime
 # Test on mac
 
 # TODO, Xavier:
+# add a thing for emojjiiisssss
 # Figure out why the scores are wrong -- Has to do with your class correction code
 # Don't hard code class names
 

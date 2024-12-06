@@ -25,7 +25,7 @@ date=0
 email=1
 class_color=2
 name=3
-pickfile = 1 # 1 = test, 2 = 7/8, 3 = 6th
+pickfile = 2 # 1 = test, 2 = 7/8, 3 = 6th
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
@@ -96,7 +96,7 @@ def findclass(user):
         if user in classes[f]:
             return f
 
-with open(file_name, newline='') as csvfile:
+with open(file_name, newline='', encoding='utf-8') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
     for row in read:
         header=row
@@ -249,8 +249,13 @@ for row in lines:
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
         # print(classes)
     if currentclass != classes[findclass(user)][-1]:
-        # print(grades[colors.index(currentclass)][user])
+        # print(grades)
         # exit()
+        if "naherr" in user:
+            # print(classes[findclass(user)][-1])
+            print(row)
+            print(lines.index(row))
+            #continue
         classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
         # print(findclass(user))
         # exit()

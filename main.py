@@ -14,6 +14,7 @@ folder_path = filedialog.askdirectory()
 
 # TODO:
 # Make it so that it reads the class names from the csv file
+# Make a better readme
 
 # TODO, Nico:
 # Add vars for locations of items in csv
@@ -68,11 +69,11 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    # if os.name == 'nt':
-    #     os.system('cls')  # Windows
-    # else:
-    #     os.system('clear')  # Unix/Linux
-    print("FAKE CLEAR")
+    if os.name == 'nt':
+        os.system('cls')  # Windows
+    else:
+        os.system('clear')  # Unix/Linux
+    # print("FAKE CLEAR")
 
 def color_to_number(color):
     # Convert color name to an index number for grades.

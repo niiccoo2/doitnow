@@ -4,35 +4,40 @@ import os
 import time
 import math
 import datetime
+import tkinter
+from tkinter import filedialog
+
+tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
+
+folder_path = filedialog.askdirectory()
+
 
 # TODO:
-# Make code into functions to make easier to read
-# ^ Add al
+# Make it so that it reads the class names from the csv file
 
 # TODO, Nico:
-# Reorder to class then name in csv and in code
 # Add vars for locations of items in csv
 # Select files with OS interface <-- Easygui?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 
 # TODO, Xavier:
-# add a thing for emojjiiisssss
-# Figure out why the scores are wrong -- Has to do with your class correction code
-# Don't hard code class names
+# Main todo
 
 date=0
 email=1
 class_color=2
 name=3
-pickfile = 2 # 1 = test, 2 = 7/8, 3 = 6th
+pickfile = 5 # 1 = test, 2 = 7/8, 3 = 6th
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 elif pickfile==2:
     file_name = "Fai Adesso Novembre (Responses) - Form Responses 1.csv" # 7/8
+elif pickfile==3:
+    file_name = "errortest.csv" # 7/8
 else:
-    file_name = "Fai Adesso! 6th Novembre (Responses) - Form Responses 1.csv" # 7/8
+    file_name = "Fai Adesso! 6th Novembre (Responses) - Form Responses 1.csv" # 6th
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -251,11 +256,11 @@ for row in lines:
     if currentclass != classes[findclass(user)][-1]:
         # print(grades)
         # exit()
-        if "naherr" in user:
-            # print(classes[findclass(user)][-1])
-            print(row)
-            print(lines.index(row))
-            #continue
+        # if "naherr" in user:
+        #     # print(classes[findclass(user)][-1])
+        #     print(row)
+        #     print(lines.index(row))
+        #     #continue
         classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
         # print(findclass(user))
         # exit()

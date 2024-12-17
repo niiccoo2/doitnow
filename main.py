@@ -14,16 +14,15 @@ folder_path = filedialog.askdirectory()
 
 # TODO:
 # Make it so that it reads the class names from the csv file
-# Make a better readme
 
 # TODO, Nico:
+# Make a better readme
 # Add vars for locations of items in csv
-# Select files with OS interface <-- Easygui?
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 
 # TODO, Xavier:
-# Main todo
+# Select files with OS interface <-- Easygui?
 
 date=0
 email=1

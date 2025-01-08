@@ -17,7 +17,6 @@ from tkinter import filedialog
 
 # TODO, Nico:
 # Make a better readme
-# Add vars for locations of items in csv
 # Use https://pyinstaller.org/en/stable/ to make one file?
 # Test on mac
 

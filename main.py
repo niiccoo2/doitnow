@@ -32,15 +32,15 @@ pickfile = 4 # 1 = test, 2 = 7/8, 3 errortest, 4 = 6th
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 elif pickfile==2:
-    file_name = "Fai Adesso- Dicembre - (Responses) - Form Responses 1.csv" # 7/8
+    file_name = "Fai Adesso - Gennaio  (Responses) - Form Responses 1.csv" # 7/8
 elif pickfile==3:
     file_name = "errortest.csv" # 7/8
 else:
-    file_name = "Fai Adesso Dicembre 6th Grade (Responses) - Form Responses 1.csv" # 6th
+    file_name = "Fai Adesso Gennaio 6th Grade (Responses) - Form Responses 1.csv" # 6th
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
-colors = ["Rosso", "Arancione", "Giallo", "Verde", "Blu", "Viola"]
+colors = ["rosso", "arancione", "giallo", "verde", "blu", "viola"]
 names = {}  # To store names associated with users
 most_recent_user_date = {}  # To track the last date each user submitted
 sus_days = {}
@@ -67,11 +67,11 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    # if os.name == 'nt':
-    #     os.system('cls')  # Windows
-    # else:
-    #     os.system('clear')  # Unix/Linux
-    print("FAKE CLEAR")
+    if os.name == 'nt':
+        os.system('cls')  # Windows
+    else:
+        os.system('clear')  # Unix/Linux
+    # print("FAKE CLEAR")
 
 def color_to_number(color):
     # Convert color name to an index number for grades.
@@ -95,10 +95,18 @@ def new_email(email):
     email = re.sub('@watertown.k12.ma.us', '', email)
     return email
 
-def findclass(user):
+# def findclass(user): # Old
+#     for f in range(len(classes)):
+#         if user in classes[f]:
+#             return f
+        
+def findclass(user): # New
     for f in range(len(classes)):
         if user in classes[f]:
             return f
+    # If user is not found, return a default value (or raise an error if needed)
+    return -1  # Could raise an error or handle as needed
+
 
 with open(file_name, newline='', encoding='utf-8') as csvfile:
     read = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -244,29 +252,39 @@ for row in lines: # Read the CSV file with form responses
 
 # classes = [["user", missedpoints, ["class", "class", ect]],[],[]]
 corrected_users = []
+z=0
 for row in lines:
     currentclass = row[class_color]
     user = new_email(row[email])
-    if user == "naherr885":
-        print("\n")
-        print([grades[colors.index(currentclass)].keys()])
-        print("\n")
+    # if user == "tosceo708":
+    #     print("\n")
+    #     print(z)
+    #     z=z+1
+    #     print("\n")
     if user not in corrected_users:
         corrected_users.append(user)
         classes[findclass(user)][-1] = classes[findclass(user)][-1][int(len(classes[findclass(user)][-1])/2)]
         # print(classes)
     if currentclass != classes[findclass(user)][-1]:
-        # print(grades)
-        # exit()
-        if "toseco" in user:
-            # print(classes[findclass(user)][-1])
-            print(row)
-            print(lines.index(row))
-            continue
-        classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
-        # print(findclass(user))
-        # exit()
-        del grades[colors.index(currentclass)][user]
+        # Check if the user exists in the grades for the current class
+
+        current_class_index = colors.index(currentclass.lower())  # Get the index for the current class
+        if user not in grades[current_class_index]:
+            grades[current_class_index][user] = 0  # Initialize the grade if not found
+
+        # Now safely update the grade
+        classes[findclass(user)][1] += grades[current_class_index][user]
+
+        # Afterward, delete the user from the grades list to prevent duplication
+        del grades[current_class_index][user]
+
+        ###### OLD -- CLEAN UP ######
+        # classes[findclass(user)][1] += grades[colors.index(currentclass)][user]
+        # # print(findclass(user))
+        # # exit()
+        # del grades[colors.index(currentclass)][user]
+        ###### ^^^^^^^^^^^^^^^ ######
+
 #grades[colors.index(classes[findclass(all_users[i])][-1][color_to_number(classes[findclass(all_users[i])][-1][len(classes[findclass(all_users[i])][-1])/2])])][all_users[i]] += classes[findclass(all_users[i])][1]
 
 # print(classes[findclass(all_users[0])][1])
@@ -275,14 +293,14 @@ for i in range(len(all_users)):
     for l in range(len(colors)):
         # print(classes[findclass(all_users[i])][-1])
         # exit()
-        if classes[findclass(all_users[i])][-1] == colors[l]:
-            grades[color_to_number(colors[l])][all_users[i]] += classes[findclass(all_users[i])][1]
+        if classes[findclass(all_users[i])][-1] == colors[l].lower():
+            grades[color_to_number(colors[l].lower())][all_users[i]] += classes[findclass(all_users[i])][1]
 # Display grades
 clear_console()
 print(RED)
 for y in range(len(grades)):
-    current_color = colors[y]  # For display purposes
-    print(GRAY + current_color + ":\n" + RED)
+    current_color = colors[y].lower()  # For display purposes
+    print(GRAY + current_color.title() + ":\n" + RED)
     for i, key_at_position in enumerate(grades[y].keys()):  # Access grades by index
         # Calculate percentage score
         #percentage = math.ceil(grades[y][key_at_position] / 5 / int(days) * 100)

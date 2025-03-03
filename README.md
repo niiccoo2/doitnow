@@ -21,3 +21,19 @@ This project was made to help with grading over 1,000 assignments every month. (
 - Read class names dynamically
 - Use [PyInstaller](https://pyinstaller.org/en/stable/) to make a mac install file
 - Test on Mac
+
+## How to set up form:
+#### **Everything must be done in this order.**
+1. Make new google form
+2. Go to **Settings>Responses** and set **Collect email addresses** to **Verifed**. Leave everything else off.
+
+![Settings Picture.](./Readme%20Assets/Screenshot%202025-03-03%209.18.43%20AM.png)
+
+3. Add a multiple choice question asking what class the student is in. (Right now only a few classes are supported: Rosso, Arancione, Giallo, Verde, Blu, Viola.)
+
+![Class Name.](./Readme%20Assets/Screenshot%202025-03-03%209.23.59%20AM.png)
+
+4. Add a question asking the name of the student.
+5. Add any number of your questions.
+
+## How to run program:

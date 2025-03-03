@@ -27,16 +27,14 @@ date=0
 email=1
 class_color=2
 name=3
-pickfile = 4 # 1 = test, 2 = 7/8, 3 errortest, 4 = 6th
+pickfile = 2 # 1 = test, 2 = 7/8, 3 = 6th
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 elif pickfile==2:
-    file_name = "Fai Adesso - Gennaio  (Responses) - Form Responses 1.csv" # 7/8
-elif pickfile==3:
-    file_name = "errortest.csv" # 7/8
+    file_name = "Fai Adesso Febbraio- (Responses) - Form Responses 1.csv" # 7/8
 else:
-    file_name = "Fai Adesso Gennaio 6th Grade (Responses) - Form Responses 1.csv" # 6th
+    file_name = "Fai Adesso Febbraio 6th grade (Responses) - Form Responses 1.csv" # 6th
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]

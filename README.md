@@ -37,3 +37,21 @@ This project was made to help with grading over 1,000 assignments every month. (
 5. Add any number of your questions.
 
 ## How to run program:
+#### **Everything must be done in order.**
+
+1. Open the doitnow google form.
+2. Go to responses at the top and click link to sheets.
+
+![Link to sheets button.](./Readme%20Assets/Screenshot%202025-03-03%201.49.00%20PM.png)
+
+3. Then click create.
+4. Click to **File>Download>Comma Seperated Values (.csv)**.
+
+![csv download](./Readme%20Assets/Screenshot%202025-03-03%201.53.10%20PM.png)
+
+5. Rename the file you downloaded to **doitnow.csv**.
+6. Put **doitnow.csv** into the same folder as **doitnow.py**. ***THIS IS REQUIRED***.
+
+![Picture of my file expoler.](./Readme%20Assets/Screenshot%202025-03-03%202.06.51%20PM.png)
+
+7. Run the python file. Answer the questions that it asks. Copy the grade that it outputs.

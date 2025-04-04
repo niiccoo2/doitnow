@@ -27,14 +27,14 @@ date=0
 email=1
 class_color=2
 name=3
-pickfile = 2 # 1 = test, 2 = 7/8, 3 = 6th
+pickfile = 3 # 1 = test, 2 = 7/8, 3 = 6th
 
 if pickfile==1:
     file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
 elif pickfile==2:
-    file_name = "Fai Adesso Febbraio- (Responses) - Form Responses 1.csv" # 7/8
+    file_name = "Fai Adesso - Marzo 7th - 8th (Responses) - Form Responses 1.csv" # 7/8
 else:
-    file_name = "Fai Adesso Febbraio 6th grade (Responses) - Form Responses 1.csv" # 6th
+    file_name = "Fai Adesso - Marzo - 6th Grade (Responses) - Form Responses 1.csv" # 6th
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -71,22 +71,40 @@ def clear_console():
         os.system('clear')  # Unix/Linux
     # print("FAKE CLEAR")
 
+# def color_to_number(color):
+#     # Convert color name to an index number for grades.
+#     if color == "Rosso":
+#         return 0
+#     elif color == "Arancione":
+#         return 1
+#     elif color == "Giallo":
+#         return 2
+#     elif color == "Verde":
+#         return 3
+#     elif color == "Blu":
+#         return 4
+#     elif color == "Viola":
+#         return 5
+#     else:
+#         return -1
+
 def color_to_number(color):
-    # Convert color name to an index number for grades.
-    if color == "Rosso":
+    color = color.lower()  # Ensure the color is in lower-case
+    if color == "rosso":
         return 0
-    elif color == "Arancione":
+    elif color == "arancione":
         return 1
-    elif color == "Giallo":
+    elif color == "giallo":
         return 2
-    elif color == "Verde":
+    elif color == "verde":
         return 3
-    elif color == "Blu":
+    elif color == "blu":
         return 4
-    elif color == "Viola":
+    elif color == "viola":
         return 5
     else:
         return -1
+
 
 def new_email(email):
     # Clean up the email address by removing the domain.
@@ -287,12 +305,25 @@ for row in lines:
 
 # print(classes[findclass(all_users[0])][1])
 # exit()
+# for i in range(len(all_users)):
+#     for l in range(len(colors)):
+#         # print(classes[findclass(all_users[i])][-1])
+#         # exit()
+#         if classes[findclass(all_users[i])][-1] == colors[l].lower():
+#             grades[color_to_number(colors[l].lower())][all_users[i]] += classes[findclass(all_users[i])][1]
+
 for i in range(len(all_users)):
+    final_class = classes[findclass(all_users[i])][-1]  # The user's final class as a string (e.g., "rosso")
+    final_points = classes[findclass(all_users[i])][1]    # The aggregated points for that user
     for l in range(len(colors)):
-        # print(classes[findclass(all_users[i])][-1])
-        # exit()
-        if classes[findclass(all_users[i])][-1] == colors[l].lower():
-            grades[color_to_number(colors[l].lower())][all_users[i]] += classes[findclass(all_users[i])][1]
+        if final_class == colors[l].lower():
+            color_index = color_to_number(colors[l].lower())
+            # Initialize the user in the dictionary if not present
+            if all_users[i] not in grades[color_index]:
+                grades[color_index][all_users[i]] = 0
+            grades[color_index][all_users[i]] += final_points
+
+
 # Display grades
 clear_console()
 print(RED)

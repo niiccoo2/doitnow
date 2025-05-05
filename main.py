@@ -1,3 +1,33 @@
+#####################################################################################
+#  ____   ___ ___ _____ _   _  _____        __
+# |  _ \ / _ \_ _|_   _| \ | |/ _ \ \      / /
+# | | | | | | | |  | | |  \| | | | \ \ /\ / / 
+# | |_| | |_| | |  | | | |\  | |_| |\ V  V /  
+# |____/ \___/___| |_| |_| \_|\___/  \_/\_/   
+#####################################################################################
+#
+# Change these values if the location of data changes in csv.
+# 
+# EXAMPLE: This means that in doitnow.csv, the order is date, email, name, class_color.
+#
+# date=0 # If you use google forms then date is almost always 0. 
+# email=1
+# class_color=3
+# name=2
+#
+# EXAMPLE ^^^
+#
+# CHANGE THESE LINES:
+date=0 
+email=1
+class_color=3
+name=2
+#
+# DON'T change any lines below of you don't know what you are doing.
+#####################################################################################
+
+pickfile = 2 # 1 = test, 2 = 7/8, 3 = 6th
+
 import csv
 import re
 import os
@@ -7,34 +37,21 @@ import datetime
 import tkinter
 from tkinter import filedialog
 
-#tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
 
-#folder_path = filedialog.askdirectory()
+try:
+    file_name = 'doitnow.csv'
+    with open(file_name, newline='', encoding='utf-8') as csvfile:
+        read = csv.reader(csvfile, delimiter=',', quotechar='"')
+        print("Using doitnow.csv")
+except:
+    print("Using pickfile.")
+    if pickfile==1:
+        file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
+    elif pickfile==2:
+        file_name = "Fai Adesso - Aprile 7th - 8th (Responses) - Form Responses 1.csv" # 7/8
+    else:
+        file_name = "Fai Adesso - Aprile - 6th Grade (Responses) - Form Responses 1.csv" # 6th
 
-
-# TODO:
-# Make it so that it reads the class names from the csv file
-
-# TODO, Nico:
-# Make a better readme
-# Use https://pyinstaller.org/en/stable/ to make one file?
-# Test on mac
-
-# TODO, Xavier:
-# Select files with OS interface <-- Easygui?
-
-date=0
-email=1
-class_color=2
-name=3
-pickfile = 3 # 1 = test, 2 = 7/8, 3 = 6th
-
-if pickfile==1:
-    file_name = 'Fai Adesso - Form Responses TEST.csv' # Test
-elif pickfile==2:
-    file_name = "Fai Adesso - Marzo 7th - 8th (Responses) - Form Responses 1.csv" # 7/8
-else:
-    file_name = "Fai Adesso - Marzo - 6th Grade (Responses) - Form Responses 1.csv" # 6th
 
 # Initialize grades dictionary for each color group
 grades = [{}, {}, {}, {}, {}, {}]
@@ -65,28 +82,12 @@ RESET = "\033[0m"
 
 def clear_console():
     # Clear the terminal screen based on the OS.
-    if os.name == 'nt':
-        os.system('cls')  # Windows
-    else:
-        os.system('clear')  # Unix/Linux
-    # print("FAKE CLEAR")
+    # if os.name == 'nt':
+    #     os.system('cls')  # Windows
+    # else:
+    #     os.system('clear')  # Unix/Linux
+    print("FAKE CLEAR")
 
-# def color_to_number(color):
-#     # Convert color name to an index number for grades.
-#     if color == "Rosso":
-#         return 0
-#     elif color == "Arancione":
-#         return 1
-#     elif color == "Giallo":
-#         return 2
-#     elif color == "Verde":
-#         return 3
-#     elif color == "Blu":
-#         return 4
-#     elif color == "Viola":
-#         return 5
-#     else:
-#         return -1
 
 def color_to_number(color):
     color = color.lower()  # Ensure the color is in lower-case
